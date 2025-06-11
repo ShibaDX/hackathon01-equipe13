@@ -1,0 +1,38 @@
+{
+  "name": "hackathon01-equipe13",
+  "version": "1.0.0",
+  "description": "Projeto do hackathon Unialfa",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./api-node/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShibaDX/hackathon01-equipe13.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShibaDX/hackathon01-equipe13/issues"
+  },
+  "homepage": "https://github.com/ShibaDX/hackathon01-equipe13#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1",
+    "zod": "^3.25.58"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
