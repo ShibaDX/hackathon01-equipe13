@@ -44,7 +44,7 @@ class ApiNodeService
     //Aluno
     public function buscarAluno(int $id): array
     {
-        return $this->request("/alunos/{$id}", 'GET');
+        return $this->request("/alunos/{$id}");
     }
 
     public function cadastrarAluno(array $aluno): array
@@ -58,5 +58,24 @@ class ApiNodeService
     }*/
 
     //Eventos
-    
+    public function listarEventos(): array
+    {
+        return $this->request('/eventos?page=2');
+    }
+
+    public function buscarEvento(int $id): array
+    {
+        return $this->request("/eventos/{$id}");
+    }
+
+    //Inscrição
+    public function inscreverAluno(array $inscricao): array
+    {
+        return $this->request('/inscricao', 'POST', $inscricao);
+    }
+
+    public function desinscreverAluno(int $id)
+    {
+        return $this->request("/inscricao/{$id}", 'DELETE');
+    }
 }
