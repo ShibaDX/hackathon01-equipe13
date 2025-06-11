@@ -7,6 +7,7 @@
     <title>Alfa Eventos</title>
     <?php require_once '../includes/bootstrap_css.php' ?>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="../img/logo.png">
 </head>
 
 <body>
