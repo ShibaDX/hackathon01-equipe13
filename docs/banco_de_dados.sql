@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10/06/2025 às 19:59
--- Versão do servidor: 10.4.28-MariaDB
--- Versão do PHP: 8.2.4
+-- Tempo de geração: 11/06/2025 às 02:12
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,9 +48,11 @@ CREATE TABLE `eventos` (
   `id` int(11) NOT NULL,
   `titulo` varchar(100) NOT NULL,
   `descricao` text DEFAULT NULL,
+  `lugar` varchar(100) NOT NULL,
   `data` date NOT NULL,
   `hora` time NOT NULL,
   `curso` varchar(100) NOT NULL,
+  `cont_participantes` int(11) NOT NULL DEFAULT 0,
   `palestrante_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -76,8 +78,8 @@ CREATE TABLE `inscricoes` (
 CREATE TABLE `palestrantes` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `mincurriculo` text DEFAULT NULL,
-  `foto_url` varchar(250) DEFAULT NULL,
+  `descricao` text DEFAULT NULL,
+  `foto` varchar(250) DEFAULT NULL,
   `tema` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
