@@ -3,7 +3,7 @@ package equipe.hackathon.gui;
 import java.awt.*;
 
 public class    GuiUtils {
-    GridBagConstraints montarConstraints(int x1, int i, int x, int y) {
+    GridBagConstraints montarConstraints( int x, int y) {
         var constraint = new GridBagConstraints();
         constraint.insets = new Insets(5, 5, 5, 5);
         constraint.gridx = x;
