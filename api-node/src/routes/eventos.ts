@@ -32,33 +32,4 @@ eventosRouter.get('/:id', async (req, res, next) => {
     }
 })
 
-eventosRouter.post('/', async (req, res) => {
-
-    const criarEventoSchema = z.object({
-        titulo: z.string(),
-        descricao: z.string(),
-        lugar: z.string(),
-        data: z.string(),
-        hora: z.string(),
-        curso: z.string(),
-        foto: z.string(),
-        cont_participantes: z.number(),
-        palestrante_id: z.number()
-    })
-
-    const objSalvar = criarEventoSchema.parse(req.body)
-
-    const id_evento = await db('eventos').insert(objSalvar)
-
-    const eventos = await db('eventos').where({
-        id: id_evento[0]
-    })
-
-    res.json({
-        message: 'Evento cadastrado com sucesso!',
-        evento: eventos
-    })
-    return
-})
-
 export default eventosRouter
