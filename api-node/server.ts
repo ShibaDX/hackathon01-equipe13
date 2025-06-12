@@ -1,6 +1,6 @@
 import express, {Request, Response, NextFunction} from 'express'
 import cors from 'cors'
-import routes from './routes'
+import routes from './src/routes'
 import { ZodError } from 'zod'
 
 const app = express()
