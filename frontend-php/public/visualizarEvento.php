@@ -30,7 +30,7 @@ $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->forma
             <div class="row">
                 <div class="col-6">
                     <h2><?= $eventoInfo['titulo'] ?></h2>
-                    <img class="imgVisualizar" src="<?php echo Eventos::IMG_DIR . $eventoInfo['foto']; ?>" alt="" style="width: 650px;">
+                    <img class="imgVisualizar" src="<?= Eventos::IMG_DIR . $eventoInfo['foto']; ?>" alt="" style="width: 650px;">
                 </div>
                 <div class="col pt-5">
                     <p>Palestrante: ROBERTO CARLOS</p>
