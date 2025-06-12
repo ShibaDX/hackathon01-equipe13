@@ -50,7 +50,7 @@ $dados = $evento->listarEventos();
                                 <li class="list-group-item">
                                     <p>Palestrante: </p>
                                     <p>Data: <?= $dataFormatada ?> - Hora: <?= $horaFormatada ?> </p>
-                                    <button class="btn btn-primary">Saiba mais</button>
+                                    <a href="visualizarEvento.php?id=<?=$eventoInfo['id']?>"><button class="btn btn-primary">Saiba mais</button></a>
                                 </li>
                             </ul>
                         </div>
