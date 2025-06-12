@@ -1,3 +1,15 @@
+<?php
+require_once '../classes/Eventos.php';
+
+$evento = new Eventos();
+$dados = $evento->buscarEvento($_GET['id']);
+$eventoInfo = $dados['body'][0];
+
+$dataFormatada = date('d/m/Y', strtotime($eventoInfo['data']));
+$horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
+
+// Falta: Banner e palestrante
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -17,19 +29,19 @@
         <div class="container-fluid pt-4">
             <div class="row">
                 <div class="col-6">
-                    <h2>NOME DO EVENTO</h2>
-                    <img src="https://placehold.co/650x350" alt="">
+                    <h2><?= $eventoInfo['titulo'] ?></h2>
+                    <img class="imgVisualizar" src="<?php echo Eventos::IMG_DIR . $eventoInfo['foto']; ?>" alt="" style="width: 650px;">
                 </div>
                 <div class="col pt-5">
                     <p>Palestrante: ROBERTO CARLOS</p>
-                    <p>Local: Neo Química Arena</p>
-                    <p>Data: 25/12/2025 - Hora: 20:99</p>
+                    <p>Local: <?= $eventoInfo['lugar'] ?></p>
+                    <p>Data: <?= $dataFormatada ?> - Hora: <?= $horaFormatada ?></p>
                     <button type="button" class="btn btn-primary btn-lg ">INSCREVER-SE</button>
                 </div>
             </div>
             <div class="descricao">
                 <h4>Descrição:</h4>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt quidem, eos sit dignissimos excepturi nam qui laudantium, eveniet eius earum quos accusantium cupiditate dolor fugiat nostrum, quibusdam distinctio hic error minima a! Delectus possimus odit, sed molestiae vitae ullam, deleniti labore a nulla architecto officia! Voluptate saepe ducimus quod qui voluptates suscipit dicta minus culpa molestias, laboriosam repellendus, ipsum esse placeat similique atque eos nostrum optio quas voluptatem minima cum earum veritatis, vitae facilis. Doloribus at quae iure, nam quibusdam omnis non ducimus officiis voluptatibus impedit, modi quasi facilis eaque! Explicabo praesentium veritatis cupiditate, accusamus eligendi repudiandae voluptatem error amet nihil quae sapiente sit nobis aliquid exercitationem reprehenderit aperiam odio. Excepturi nihil maxime alias rerum dolorem quasi odit neque magnam, dignissimos, eum sunt minus blanditiis error maiores. Consectetur quia illo dolores, quo soluta quibusdam aperiam itaque excepturi mollitia illum sed quam eius vel ea impedit vero? Esse ratione modi, et beatae sequi alias in est cumque nemo! Quibusdam culpa mollitia minus maiores dicta, quidem error fugiat molestias aperiam. Voluptates repellendus illum soluta quis reprehenderit ipsam atque in quidem dolor eligendi et cumque, magnam error ipsa. Sint eligendi tempora sed ducimus. Officia ut nihil quas aliquam facilis quaerat unde quos perferendis!</p>
+                <p><?= $eventoInfo['descricao'] ?></p>
             </div>
         </div>
     </main>

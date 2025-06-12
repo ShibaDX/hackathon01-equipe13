@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11/06/2025 às 02:12
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.0.30
+-- Tempo de geração: 12/06/2025 às 20:56
+-- Versão do servidor: 10.4.28-MariaDB
+-- Versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -52,6 +52,7 @@ CREATE TABLE `eventos` (
   `data` date NOT NULL,
   `hora` time NOT NULL,
   `curso` varchar(100) NOT NULL,
+  `foto` varchar(200) NOT NULL,
   `cont_participantes` int(11) NOT NULL DEFAULT 0,
   `palestrante_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
