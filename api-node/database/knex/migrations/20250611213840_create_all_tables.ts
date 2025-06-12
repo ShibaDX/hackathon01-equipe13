@@ -30,6 +30,7 @@ export async function up(knex: Knex): Promise<void> {
         table.date('data').notNullable();
         table.time('hora').notNullable();
         table.string('curso', 100).notNullable();
+        table.string('foto', 200).notNullable();
         table.integer('cont_participantes').notNullable().defaultTo(0);
         
         // Chave estrangeira

@@ -33,7 +33,7 @@ class Alunos
         }
     }
 
-  /*  public function validarLogin($email, $senha)
+    /*  public function validarLogin($email, $senha)
     {
         $sql = "SELECT id, nome, senha from usuarios WHERE email = :email";
 
@@ -61,7 +61,7 @@ class Alunos
         }
     }
 
-   /* public function atualizarUsuario($id, $nome, $email)
+    /* public function atualizarUsuario($id, $nome, $email)
     {
         $sql = "UPDATE usuarios SET nome = :nome, email = :email WHERE id = :id";
         $query = $this->db->prepare($sql);

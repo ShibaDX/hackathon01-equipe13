@@ -1,3 +1,11 @@
+<?php
+require_once '../classes/Eventos.php';
+
+$evento = new Eventos();
+$dados = $evento->listarEventos();
+
+// Falta: Banner e palestrante
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -23,57 +31,36 @@
             <option value="Psicologia">Psicologia</option>
         </select>
 
-        <div class="row mt-5">
-
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Nome do Evento</h5>
-                        <p><i class="fa-solid fa-location-dot"></i> <strong>UniALFA - Sala 05</strong></p>
-                        <img src="https://placehold.co/250x150" class="card-img" alt="Banner do Evento">
+        <div class="row  mt-5 ">
+            <?php if (($dados['code'] === 200) && (is_array($dados['body'])) && (!is_null($dados['body']))): ?>
+                <?php foreach ($dados['body'] as $eventoInfo): ?>
+                    <?php
+                    $dataFormatada = date('d/m/Y', strtotime($eventoInfo['data']));
+                    $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
+                    ?>
+                    <div class="col-md-4 mb-4">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $eventoInfo['titulo'] ?></h5>
+                                <p><?= $eventoInfo['curso'] ?></p>
+                                <p><i class="fa-solid fa-location-dot"></i> <strong><?= $eventoInfo['lugar'] ?></strong></p>
+                                <img src="https://placehold.co/250x150" class="card-img" alt="Banner do Evento">
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <p>Palestrante: </p>
+                                    <p>Data: <?= $dataFormatada ?> - Hora: <?= $horaFormatada ?> </p>
+                                    <button class="btn btn-primary">Saiba mais</button>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <p>Palestrante: </p>
-                            <p>Data: 13/05/2025 - Hora: 09:00 </p>
-                            <button class="btn btn-primary">Saiba mais</button>
-                        </li>
-                    </ul>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="col-12">
+                    <p class="alert alert-warning">Nenhum evento encontrado.</p>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Nome do Evento</h5>
-                        <p><i class="fa-solid fa-location-dot"></i> <strong>UniALFA - Sala 05</strong></p>
-                        <img src="https://placehold.co/250x150" class="card-img" alt="Banner do Evento">
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <p>Palestrante: </p>
-                            <p>Data: 13/05/2025 - Hora: 09:00 </p>
-                            <button class="btn btn-primary">Saiba mais</button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Nome do Evento</h5>
-                        <p><i class="fa-solid fa-location-dot"></i> <strong>UniALFA - Sala 05</strong></p>
-                        <img src="https://placehold.co/250x150" class="card-img" alt="Banner do Evento">
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <p>Palestrante: </p>
-                            <p>Data: 13/05/2025 - Hora: 09:00 </p>
-                            <button class="btn btn-primary">Saiba mais</button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
+            <?php endif; ?>
         </div>
 
 
