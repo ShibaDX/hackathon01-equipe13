@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./api-node/server.ts"
+    "dev": "nodemon ./server.ts"
   },
   "repository": {
     "type": "git",
