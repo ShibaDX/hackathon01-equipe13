@@ -7,8 +7,8 @@ class ApiNodeService
 
     public function __construct()
     {
-        $this->baseUrl = 'http://localhost/api';
-        //$this->apiKey = "reqres-free-v1";
+        $this->baseUrl = 'http://localhost:3001';
+        $this->apiKey = "reqres-free-v1";
     }
 
     private function request(string $endpoint, string $method = 'GET', array $data = []): array
@@ -60,7 +60,7 @@ class ApiNodeService
     //Eventos
     public function listarEventos(): array
     {
-        return $this->request('/eventos?page=2');
+        return $this->request('/eventos');
     }
 
     public function buscarEvento(int $id): array
