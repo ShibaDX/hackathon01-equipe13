@@ -31,26 +31,26 @@ $dados = $evento->listarEventos();
             <option value="Psicologia">Psicologia</option>
         </select>
 
-        <div class="row  mt-5 ">
+        <div class="row mt-5 ">
             <?php if (($dados['code'] === 200) && (is_array($dados['body'])) && (!is_null($dados['body']))): ?>
                 <?php foreach ($dados['body'] as $eventoInfo): ?>
                     <?php
                     $dataFormatada = date('d/m/Y', strtotime($eventoInfo['data']));
                     $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
                     ?>
-                    <div class="col-md-4 mb-4">
+                    <div class="col-lg-3 mb-4">
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title"><?= $eventoInfo['titulo'] ?></h5>
                                 <p><?= $eventoInfo['curso'] ?></p>
                                 <p><i class="fa-solid fa-location-dot"></i> <strong><?= $eventoInfo['lugar'] ?></strong></p>
-                                <img src="https://placehold.co/250x150" class="card-img" alt="Banner do Evento">
+                                <img src="<?= Eventos::IMG_DIR . $eventoInfo['foto']; ?>" class="card-img" alt="Banner do Evento">
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
                                     <p>Palestrante: </p>
                                     <p>Data: <?= $dataFormatada ?> - Hora: <?= $horaFormatada ?> </p>
-                                    <button class="btn btn-primary">Saiba mais</button>
+                                    <a href="visualizarEvento.php?id=<?=$eventoInfo['id']?>"><button class="btn btn-primary">Saiba mais</button></a>
                                 </li>
                             </ul>
                         </div>
