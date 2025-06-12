@@ -4,7 +4,7 @@ require_once 'ApiNodeService.php';
 
 class Eventos
 {
-    const imgDir = 'img/uploads';
+    const IMG_DIR = '../img/uploads/';
 
     public function listarEventos()
     {
@@ -20,5 +20,4 @@ class Eventos
 
         return $evento;
     }
-
 }

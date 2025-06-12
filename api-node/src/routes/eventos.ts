@@ -41,6 +41,7 @@ eventosRouter.post('/', async (req, res) => {
         data: z.string(),
         hora: z.string(),
         curso: z.string(),
+        foto: z.string(),
         cont_participantes: z.number(),
         palestrante_id: z.number()
     })

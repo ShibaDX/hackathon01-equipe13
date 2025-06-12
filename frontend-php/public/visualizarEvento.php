@@ -1,14 +1,14 @@
 <?php
-    require_once '../classes/Eventos.php';
+require_once '../classes/Eventos.php';
 
-    $evento = New Eventos();
-    $dados = $evento->buscarEvento($_GET['id']);
-    $eventoInfo = $dados['body'][0];
+$evento = new Eventos();
+$dados = $evento->buscarEvento($_GET['id']);
+$eventoInfo = $dados['body'][0];
 
-    $dataFormatada = date('d/m/Y', strtotime($eventoInfo['data']));
-    $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
+$dataFormatada = date('d/m/Y', strtotime($eventoInfo['data']));
+$horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
 
-    // Falta: Banner e palestrante
+// Falta: Banner e palestrante
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -29,19 +29,19 @@
         <div class="container-fluid pt-4">
             <div class="row">
                 <div class="col-6">
-                    <h2><?=$eventoInfo['titulo']?></h2>
-                    <img src="https://placehold.co/650x350" alt="">
+                    <h2><?= $eventoInfo['titulo'] ?></h2>
+                    <img class="imgVisualizar" src="<?php echo Eventos::IMG_DIR . $eventoInfo['foto']; ?>" alt="" style="width: 650px;">
                 </div>
                 <div class="col pt-5">
                     <p>Palestrante: ROBERTO CARLOS</p>
-                    <p>Local: <?=$eventoInfo['lugar']?></p>
+                    <p>Local: <?= $eventoInfo['lugar'] ?></p>
                     <p>Data: <?= $dataFormatada ?> - Hora: <?= $horaFormatada ?></p>
                     <button type="button" class="btn btn-primary btn-lg ">INSCREVER-SE</button>
                 </div>
             </div>
             <div class="descricao">
                 <h4>Descrição:</h4>
-                <p><?=$eventoInfo['descricao']?></p>
+                <p><?= $eventoInfo['descricao'] ?></p>
             </div>
         </div>
     </main>
