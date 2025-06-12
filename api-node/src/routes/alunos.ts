@@ -37,7 +37,8 @@ alunosRouter.post('/', async (req, res, next) => {
         const schema = z.object({
             nome: z.string().max(200),
             email: z.string().email().max(200),
-            senha: z.string().max(250), 
+            senha: z.string().max(250),
+            telefone: z.string().max(15), 
             cpf: z.string().length(11)
         })
 
