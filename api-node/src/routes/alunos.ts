@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import db from '../database/knex'
+import db from '../../database/knex'
 import { z } from 'zod'
 
 const alunosRouter = Router()
