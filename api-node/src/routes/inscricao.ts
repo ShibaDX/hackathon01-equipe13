@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import db from '../../database/knex'
+import db from '../database/knex'
 import { z } from 'zod'
 
 const inscricaoRouter = Router()
@@ -17,25 +17,25 @@ inscricaoRouter.post('/', async (req, res, next) => {
 
         const aluno = await db('alunos').where({ id: aluno_id }).first()
         if (!aluno) {             // verificando se tem o aluno no banco 
-            return res.status(404).json({ message: "aluno nao encontrado" })
+            return res.status(404).json({ message: "Aluno não encontrado" })
         }
 
         const evento = await db('eventos').where({ id: evento_id }).first()             // verificando se tem evento no banco 
         if (!evento) {
-            return res.status(404).json({ message: "evento nao encontrado" })
+            return res.status(404).json({ message: "Evento não encontrado" })
         }
 
 
 
         const inscricao = await db('inscricoes').where({ aluno_id, evento_id }).first()
         if (inscricao) {                                                                     // verificando se o aluno esta no evento 
-            return res.status(400).json({ message: "aluno ja esta cadastrado no evento" })
+            return res.status(400).json({ message: "Aluno já está cadastrado no evento" })
         }
 
         const [id] = await db('inscricoes').insert({ aluno_id, evento_id })    // Criando a inscrição do aluno no evento
 
         res.status(201).json({
-            message: "inscriçao realizada ",
+            message: "Inscriçao realizada com sucesso",
             inscricao: {
                 id,
                 aluno_id,

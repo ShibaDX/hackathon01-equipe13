@@ -1,12 +1,12 @@
 import { Router } from 'express'
 import { z } from 'zod'
-import db from '../../database/knex'
+import db from '../database/knex'
 
 const palestrantesRouter = Router()
 
 // Listar todos os palestrantes
 palestrantesRouter.get('/', async (req, res, next) => {
-    try { 
+    try {
         const palestrantes = await db('palestrantes').select('*')
         res.json(palestrantes)
     } catch (error) {
@@ -16,19 +16,23 @@ palestrantesRouter.get('/', async (req, res, next) => {
 
 // Buscar 1 palestrante
 palestrantesRouter.get('/:id', async (req, res, next) => {
-    
-    const registerParamsSchema = z.object({
-        id: z.string().min(1)
-    })
-    // + transforma um string em num
-    const id = +registerParamsSchema.parse(req.params).id
+
+    const { id } = z.object({ id: z.string().min(1) }).parse(req.params);
 
     try {
-        const palestrantes = await db('palestrantes').select('*').where({ id })
-        res.json(palestrantes)
+        const palestrante = await db('palestrantes')
+            .where({ id: +id })
+            .first();
+
+        if (!palestrante) {
+            return res.status(404).json({ error: 'Palestrante não encontrado' })
+        }
+
+        return res.json(palestrante)
     } catch (error) {
         next(error)
     }
+
 
 })
 

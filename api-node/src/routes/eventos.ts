@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { z } from 'zod'
-import db from '../../database/knex'
+import db from '../database/knex'
 
 const eventosRouter = Router()
 
@@ -26,6 +26,13 @@ eventosRouter.get('/:id', async (req, res, next) => {
 
     try {
         const eventos = await db('eventos').select('*').where({ id })
+        
+        if (eventos.length === 0) {
+            return res
+            .status(404)
+            .json({ error: 'Evento não encontrado' })
+        }
+        
         res.json(eventos)
     } catch (error) {
         next(error)
