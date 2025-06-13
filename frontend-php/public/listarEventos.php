@@ -1,10 +1,11 @@
 <?php
 require_once '../classes/Eventos.php';
+require_once '../classes/Palestrantes.php';
 
+$palestrante = new Palestrantes();
 $evento = new Eventos();
 $dados = $evento->listarEventos();
 
-// Falta: Banner e palestrante
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -48,9 +49,15 @@ $dados = $evento->listarEventos();
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
-                                    <p>Palestrante: </p>
+                                    <p>Palestrante:
+                                        <?php
+                                        $dadosPalestrante = $palestrante->buscarPalestrante($eventoInfo['palestrante_id']);
+                                        $palestranteInfo = $dadosPalestrante['body'][0];
+                                        echo $palestranteInfo['nome'];
+                                        ?>
+                                    </p>
                                     <p>Data: <?= $dataFormatada ?> - Hora: <?= $horaFormatada ?> </p>
-                                    <a href="visualizarEvento.php?id=<?=$eventoInfo['id']?>"><button class="btn btn-primary">Saiba mais</button></a>
+                                    <a href="visualizarEvento.php?id=<?= $eventoInfo['id'] ?>"><button class="btn btn-primary">Saiba mais</button></a>
                                 </li>
                             </ul>
                         </div>

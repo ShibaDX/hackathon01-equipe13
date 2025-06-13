@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="mb-3">
                                 <label for="cpf" class="form-label">CPF</label>
-                                <input type="text" class="form-control" id="cpf" name="cpf" required>
+                                <input type="text" class="form-control" id="cpf" name="cpf" minlength="11" required>
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100">
