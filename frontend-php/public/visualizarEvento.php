@@ -35,11 +35,15 @@ $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->forma
                     <img class="imgVisualizar" src="<?= Eventos::IMG_DIR . $eventoInfo['foto']; ?>" alt="" style="width: 650px;">
                 </div>
                 <div class="col pt-5">
-                    <p>Palestrante: <?php
-                                    $dadosPalestrante = $palestrante->buscarPalestrante($eventoInfo['palestrante_id']);
-                                    $palestranteInfo = $dadosPalestrante['body'][0];
-                                    echo $palestranteInfo['nome'];
-                                    ?></p>
+                    <p>Palestrante:
+                        <a href="visualizarPalestrante.php?id=<?= $eventoInfo['palestrante_id'] ?>">
+                            <?php
+                            $dadosPalestrante = $palestrante->buscarPalestrante($eventoInfo['palestrante_id']);
+                            $palestranteInfo = $dadosPalestrante['body'][0];
+                            echo $palestranteInfo['nome'];
+                            ?>
+                        </a>
+                    </p>
                     <p>Local: <?= $eventoInfo['lugar'] ?></p>
                     <p>Data: <?= $dataFormatada ?> - Hora: <?= $horaFormatada ?></p>
                     <button type="button" class="btn btn-primary btn-lg ">INSCREVER-SE</button>
