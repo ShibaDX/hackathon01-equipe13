@@ -19,7 +19,7 @@ alunosRouter.get('/:id', async (req, res, next) => {
         const aluno = await db('alunos').where({ id }).first();
 
         if (!aluno) {
-            return res.status(404).json({ message: 'Aluno não encontrado' });
+            return res.status(404).json({ message: 'Aluno Nao ee encontrado' });
         }
 
         res.json(aluno);
