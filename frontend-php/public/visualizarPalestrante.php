@@ -3,7 +3,7 @@ require_once '../classes/Palestrantes.php';
 
 $palestrante = new Palestrantes();
 $dados = $palestrante->buscarPalestrante($_GET['id']);
-$palestranteInfo = $dados['body'][0];
+$palestranteInfo = $dados['body'];
 
 ?>
 <!DOCTYPE html>

@@ -13,7 +13,6 @@ class Alunos
     public function criarAluno($nome, $email, $senha, $telefone, $cpf)
     {
         $api = new ApiNodeService();
-        $senha = password_hash($senha, PASSWORD_BCRYPT);
 
         $aluno = [
             'nome' => $nome,
@@ -29,7 +28,7 @@ class Alunos
             echo "Aluno cadastrado com sucesso.";
         } else {
             echo "Erro ao cadastrar aluno. Código: " . $resposta['code'];
-            //print_r($resposta['body']); // para debug
+            print_r($resposta['body']); // para debug
         }
     }
 
@@ -58,6 +57,25 @@ class Alunos
             echo "Nome do aluno: " . $aluno['body']['nome'];
         } else {
             echo "Aluno não encontrado.";
+        }
+    }
+
+    public function verificarLogin($email, $senha)
+    {
+        $api = new ApiNodeService();
+
+        $aluno = [
+            'email' => $email,
+            'senha' => $senha
+        ];
+
+        $resposta = $api->verificarLogin($aluno);
+
+        if ($resposta['code'] === 200) {
+            return $resposta;
+        } else {
+            echo "Erro ao logar. Código: " . $resposta['code'];
+            print_r($resposta['body']); // para debug
         }
     }
 

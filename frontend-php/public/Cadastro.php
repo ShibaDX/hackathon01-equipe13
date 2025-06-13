@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="senha" class="form-label">Senha</label>
-                                    <input type="password" class="form-control" id="senha" name="senha" required>
+                                    <input type="password" class="form-control" id="senha" name="senha" minlength="8" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="telefone" class="form-label">Telefone</label>
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="mb-3">
                                 <label for="cpf" class="form-label">CPF</label>
-                                <input type="text" class="form-control" id="cpf" name="cpf" minlength="11" required>
+                                <input type="text" class="form-control" id="cpf" name="cpf" minlength="11" maxlength="11" required>
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100">

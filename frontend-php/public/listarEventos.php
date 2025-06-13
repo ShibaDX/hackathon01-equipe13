@@ -52,7 +52,7 @@ $dados = $evento->listarEventos();
                                     <p>Palestrante:
                                         <?php
                                         $dadosPalestrante = $palestrante->buscarPalestrante($eventoInfo['palestrante_id']);
-                                        $palestranteInfo = $dadosPalestrante['body'][0];
+                                        $palestranteInfo = $dadosPalestrante['body'];
                                         echo $palestranteInfo['nome'];
                                         ?>
                                     </p>

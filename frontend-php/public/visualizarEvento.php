@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+if (isset($_SESSION['aluno_logado']) && $_SESSION['aluno_logado'] === true) {
+    echo "Sessão ativa. ID do aluno: " . $_SESSION['aluno_id'];
+} else {
+    echo "Usuário não está logado.";
+}
+
 require_once '../classes/Eventos.php';
 require_once '../classes/Palestrantes.php';
 require_once '../classes/Inscricao.php';
@@ -27,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Falta: Banner e palestrante
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -56,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <a href="visualizarPalestrante.php?id=<?= $eventoInfo['palestrante_id'] ?>">
                             <?php
                             $dadosPalestrante = $palestrante->buscarPalestrante($eventoInfo['palestrante_id']);
-                            $palestranteInfo = $dadosPalestrante['body'][0];
+                            $palestranteInfo = $dadosPalestrante['body'];
                             echo $palestranteInfo['nome'];
                             ?>
                         </a>
@@ -64,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p>Local: <?= $eventoInfo['lugar'] ?></p>
                     <p>Data: <?= $dataFormatada ?> - Hora: <?= $horaFormatada ?></p>
                     <form method="post">
-                        <input type="hidden" name="aluno_id" value="2">
+                        <input type="hidden" name="aluno_id" value="<?=$_SESSION['aluno_id']?>">
                         <input type="hidden" name="evento_id" value="<?= $eventoInfo['id'] ?>">
                         <button type="submit" class="btn btn-primary btn-lg ">INSCREVER-SE</button>
                     </form>
