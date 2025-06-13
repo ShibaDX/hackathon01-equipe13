@@ -29,7 +29,7 @@ class Alunos
             echo "Aluno cadastrado com sucesso.";
         } else {
             echo "Erro ao cadastrar aluno. Código: " . $resposta['code'];
-            print_r($resposta['body']); // para debug
+            //print_r($resposta['body']); // para debug
         }
     }
 

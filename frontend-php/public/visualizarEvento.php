@@ -1,7 +1,9 @@
 <?php
 require_once '../classes/Eventos.php';
 require_once '../classes/Palestrantes.php';
+require_once '../classes/Inscricao.php';
 
+$inscricao = new Inscricao();
 $palestrante = new Palestrantes();
 $evento = new Eventos();
 $dados = $evento->buscarEvento($_GET['id']);
@@ -9,6 +11,21 @@ $eventoInfo = $dados['body'][0];
 
 $dataFormatada = date('d/m/Y', strtotime($eventoInfo['data']));
 $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $aluno_id = $_POST['aluno_id'];
+    $evento_id = $_POST['evento_id'];
+
+    try {
+        // Chamada para a API Node.js
+        $inscricao->inscrever($aluno_id, $evento_id);
+        $sucesso = 'Aluno inscrito com sucesso!';
+        echo "<br>Sucesso";
+    } catch (Exception $e) {
+        $erro = 'Erro ao inscrever: ' . $e->getMessage();
+        echo "<br>Erro";
+    }
+}
 
 // Falta: Banner e palestrante
 ?>
@@ -46,7 +63,11 @@ $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->forma
                     </p>
                     <p>Local: <?= $eventoInfo['lugar'] ?></p>
                     <p>Data: <?= $dataFormatada ?> - Hora: <?= $horaFormatada ?></p>
-                    <button type="button" class="btn btn-primary btn-lg ">INSCREVER-SE</button>
+                    <form method="post">
+                        <input type="hidden" name="aluno_id" value="2">
+                        <input type="hidden" name="evento_id" value="<?= $eventoInfo['id'] ?>">
+                        <button type="submit" class="btn btn-primary btn-lg ">INSCREVER-SE</button>
+                    </form>
                 </div>
             </div>
             <div class="descricao">

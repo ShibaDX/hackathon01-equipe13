@@ -71,12 +71,12 @@ class ApiNodeService
     //Inscrição
     public function inscreverAluno(array $inscricao): array
     {
-        return $this->request('/inscricao', 'POST', $inscricao);
+        return $this->request('/inscricoes', 'POST', $inscricao);
     }
 
     public function desinscreverAluno(int $id)
     {
-        return $this->request("/inscricao/{$id}", 'DELETE');
+        return $this->request("/inscricoes/{$id}", 'DELETE');
     }
 
     //Palestrante 
