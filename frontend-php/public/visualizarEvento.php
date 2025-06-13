@@ -1,6 +1,8 @@
 <?php
 require_once '../classes/Eventos.php';
+require_once '../classes/Palestrantes.php';
 
+$palestrante = new Palestrantes();
 $evento = new Eventos();
 $dados = $evento->buscarEvento($_GET['id']);
 $eventoInfo = $dados['body'][0];
@@ -33,7 +35,11 @@ $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->forma
                     <img class="imgVisualizar" src="<?= Eventos::IMG_DIR . $eventoInfo['foto']; ?>" alt="" style="width: 650px;">
                 </div>
                 <div class="col pt-5">
-                    <p>Palestrante: ROBERTO CARLOS</p>
+                    <p>Palestrante: <?php
+                                    $dadosPalestrante = $palestrante->buscarPalestrante($eventoInfo['palestrante_id']);
+                                    $palestranteInfo = $dadosPalestrante['body'][0];
+                                    echo $palestranteInfo['nome'];
+                                    ?></p>
                     <p>Local: <?= $eventoInfo['lugar'] ?></p>
                     <p>Data: <?= $dataFormatada ?> - Hora: <?= $horaFormatada ?></p>
                     <button type="button" class="btn btn-primary btn-lg ">INSCREVER-SE</button>
