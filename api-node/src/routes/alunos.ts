@@ -4,8 +4,6 @@ import { z } from 'zod'
 
 const alunosRouter = Router()
 
-
-
 alunosRouter.get('/', async (req, res, next) => {
     try {
         const alunos = await db('alunos').select('*')
@@ -14,7 +12,6 @@ alunosRouter.get('/', async (req, res, next) => {
         next(error)
     }
 })
-
 
 alunosRouter.get('/:id', async (req, res, next) => {
     try {
@@ -30,7 +27,6 @@ alunosRouter.get('/:id', async (req, res, next) => {
         next(error);
     }
 });
-
 
 alunosRouter.post('/', async (req, res, next) => {
     try {
@@ -55,7 +51,6 @@ alunosRouter.post('/', async (req, res, next) => {
         next(error)
     }
 })
-
 
 alunosRouter.put('/:id', async (req, res, next) => {
     try {
@@ -86,7 +81,6 @@ alunosRouter.put('/:id', async (req, res, next) => {
         next(error)
     }
 })
-
 
 alunosRouter.delete('/:id', async (req, res, next) => {
     try {
