@@ -1,6 +1,7 @@
 import { Router } from 'express'
-import db from '../../database/knex'
+import db from '../database/knex'
 import { z } from 'zod'
+import { hash } from 'bcrypt'
 
 const alunosRouter = Router()
 
@@ -19,7 +20,7 @@ alunosRouter.get('/:id', async (req, res, next) => {
         const aluno = await db('alunos').where({ id }).first();
 
         if (!aluno) {
-            return res.status(404).json({ message: 'Aluno Nao ee encontrado' });
+            return res.status(404).json({ message: 'Aluno não encontrado' });
         }
 
         res.json(aluno);
@@ -33,15 +34,22 @@ alunosRouter.post('/', async (req, res, next) => {
         const schema = z.object({
             nome: z.string().max(200),
             email: z.string().email().max(200),
-            senha: z.string().max(250),
-            telefone: z.string().max(15), 
+            senha: z.string().min(8).max(250),
+            telefone: z.string().max(15),
             cpf: z.string().length(11)
         })
 
         const dados = schema.parse(req.body)
 
-        const [id] = await db('alunos').insert(dados)
-        const aluno = await db('alunos').where({ id }).first()
+        const senhaHash = await hash(dados.senha, 8)
+
+        const [id] = await db('alunos').insert({
+            ...dados,
+            senha: senhaHash
+        })
+        const aluno = await db('alunos')
+            .where({ id })
+            .first()
 
         res.status(201).json({
             message: 'Aluno cadastrado com sucesso!',
@@ -59,14 +67,21 @@ alunosRouter.put('/:id', async (req, res, next) => {
         const schema = z.object({
             nome: z.string().max(200),
             email: z.string().email().max(200),
-            senha: z.string().max(250),
+            senha: z.string().min(8).max(250),
             telefone: z.string().max(15),
             cpf: z.string().length(11)
         })
 
         const dados = schema.parse(req.body)
 
-        const atualizado = await db('alunos').where({ id }).update(dados)
+        const senhaHash = await hash(dados.senha, 8)
+
+        const atualizado = await db('alunos')
+            .where({ id })
+            .update({
+                ...dados,
+                senha: senhaHash
+            })
 
         if (!atualizado) {
             return res.status(404).json({ message: 'Aluno não encontrado' })
