@@ -49,7 +49,7 @@ class ApiNodeService
 
     public function cadastrarAluno(array $aluno): array
     {
-        return $this->request('/aluno', 'POST', $aluno);
+        return $this->request('/alunos', 'POST', $aluno);
     }
 
     /*public function atualizarAluno(int $id, array $usuario): array
