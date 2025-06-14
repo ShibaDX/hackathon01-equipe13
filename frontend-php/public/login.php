@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "Login realizado com sucesso";
                 $_SESSION['aluno_logado'] = true;
                 $_SESSION['aluno_id'] = $login['body']['aluno']['id'];
+                $_SESSION['aluno_nome'] = $login['body']['aluno']['nome'];
                 echo $_SESSION['aluno_id'];
                 header("Location: index.php");
                 exit();

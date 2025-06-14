@@ -15,8 +15,14 @@
                         <a class="nav-link" href="listarEventos.php">Eventos</a>
                     </li>
                 </ul>
+                
                 <div class="d-flex me-3">
+                    <?php if(isset($_SESSION['aluno_logado']) && $_SESSION['aluno_logado'] === true): ?>
+                                                <h3><?=$_SESSION['aluno_nome']?></h3>
+
+                    <?php else: ?>
                     <a href="login.php"><button class="btn btn-primary">ENTRAR</button></a>
+                    <?php endif?>
                 </div>
             </div>
     </nav>
