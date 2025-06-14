@@ -32,20 +32,32 @@ $dados = $evento->listarEventos();
     <div class="container mt-4">
         <h1><i class="fa-regular fa-calendar-days"></i> Eventos</h1>
         <h3 class="mt-3">Filtro</h3>
-        <select name="filtro" id="filtro" class="form-select" style="width: 150px">
-            <option value="Informática">Informática</option>
-            <option value="Direito">Direito</option>
-            <option value="Pedagogia">Pedagogia</option>
-            <option value="Psicologia">Psicologia</option>
-        </select>
+        <form method="GET" id="formFiltro">
+            <select name="curso" id="filtro" class="form-select" style="width: 150px" onchange="document.getElementById('formFiltro').submit()">
+                <option value="">Todos</option>
+                <option value="Informática" <?= ($_GET['curso'] ?? '') === 'Informática' ? 'selected' : '' ?>>Informática</option>
+                <option value="Direito" <?= ($_GET['curso'] ?? '') === 'Direito' ? 'selected' : '' ?>>Direito</option>
+                <option value="Pedagogia" <?= ($_GET['curso'] ?? '') === 'Pedagogia' ? 'selected' : '' ?>>Pedagogia</option>
+                <option value="Psicologia" <?= ($_GET['curso'] ?? '') === 'Psicologia' ? 'selected' : '' ?>>Psicologia</option>
+            </select>
+        </form>
 
-        <div class="row mt-5 ">
-            <?php if (($dados['code'] === 200) && (is_array($dados['body'])) && (!is_null($dados['body']))): ?>
-                <?php foreach ($dados['body'] as $eventoInfo): ?>
-                    <?php
+        <div class="row mt-5">
+            <?php
+            $eventosFiltrados = [];
+
+            if (($dados['code'] === 200) && is_array($dados['body'])) {
+                // Aplica o filtro, se existir
+                $eventosFiltrados = !empty($_GET['curso'])
+                    ? array_filter($dados['body'], fn($evento) => $evento['curso'] === $_GET['curso'])
+                    : $dados['body'];
+            }
+
+            if (!empty($eventosFiltrados)):
+                foreach ($eventosFiltrados as $eventoInfo):
                     $dataFormatada = date('d/m/Y', strtotime($eventoInfo['data']));
                     $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
-                    ?>
+            ?>
                     <div class="col-lg-3 mb-4">
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
@@ -69,14 +81,15 @@ $dados = $evento->listarEventos();
                             </ul>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
+                <?php
+                endforeach;
+            else:
+                ?>
                 <div class="col-12">
                     <p class="alert alert-warning">Nenhum evento encontrado.</p>
                 </div>
             <?php endif; ?>
         </div>
-
 
     </div>
 
