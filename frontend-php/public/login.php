@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['aluno_logado'] = true;
                 $_SESSION['aluno_id'] = $login['body']['aluno']['id'];
                 $_SESSION['aluno_nome'] = $login['body']['aluno']['nome'];
+                $_SESSION['aluno_email'] = $login['body']['aluno']['email'];
                 echo $_SESSION['aluno_id'];
                 header("Location: index.php");
                 exit();
@@ -41,8 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
     <?php require_once '../includes/bootstrap_css.php'; ?>
+        <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>

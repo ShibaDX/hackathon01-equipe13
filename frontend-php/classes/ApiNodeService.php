@@ -84,6 +84,11 @@ class ApiNodeService
         return $this->request("/inscricoes/{$id}", 'DELETE');
     }
 
+    public function listarInscricoesPorAluno(int $alunoId): array
+    {
+        return $this->request("/inscricoes/aluno/{$alunoId}");
+    }
+
     //Palestrante 
     public function buscarPalestrante(int $id): array
     {

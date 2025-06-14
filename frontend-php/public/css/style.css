@@ -15,9 +15,7 @@
 .eventos-linha {
     display: inline-flex;
     text-align: center;
-
-    
-        white-space: nowrap;
+    white-space: nowrap;
 }
 
 .eventos-linha .card {
@@ -33,4 +31,47 @@
 .imgListar {
     width: 250px;
     height: 150px;
+}
+
+.nome-header {
+    margin: 0;
+    padding-left: 10px;
+}
+
+.img-profile {
+    width: 35px;
+    border-radius: 100%;
+}
+
+        .perfil-container {
+            margin: 30px;
+        }
+
+        .perfil-avatar img {
+            width: 100px;
+            border-radius: 100%;
+        }
+
+        .perfil-info p {
+            margin: 0;
+        }
+
+.evento-container {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+    max-width: 90%;
+    border-radius: 8px;
+}
+
+.evento-imagem img {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.evento-info p {
+    margin: 0;
+    line-height: 1.4;
 }
