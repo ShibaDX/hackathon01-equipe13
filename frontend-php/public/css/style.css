@@ -1,3 +1,7 @@
+body {
+    max-width: 100%;
+}
+
 .banner {
     width: 100%;
     height: 450px;
@@ -15,9 +19,7 @@
 .eventos-linha {
     display: inline-flex;
     text-align: center;
-
-    
-        white-space: nowrap;
+    white-space: nowrap;
 }
 
 .eventos-linha .card {
@@ -33,4 +35,67 @@
 .imgListar {
     width: 250px;
     height: 150px;
+}
+
+.nome-header a {
+    margin: 0;
+    text-decoration: none !important;
+    color: #000 !important;
+}
+
+.nome-header a {
+    text-decoration: none !important;
+    /* remove sublinhado */
+    color: inherit;
+    /* herda a cor do elemento pai */
+}
+
+.nome-header:hover {
+    text-decoration: none;
+    /* evita sublinhado no hover */
+    color: inherit;
+}
+
+.img-profile {
+    width: 35px;
+    border-radius: 100%;
+}
+
+
+.perfil-avatar img {
+    width: 100px;
+    border-radius: 100%;
+}
+
+.perfil-info p {
+    margin: 0;
+}
+
+.evento-container {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+    max-width: 90%;
+    border-radius: 8px;
+}
+
+.evento-imagem img {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.evento-info p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+#btn-logout {
+    width: 700px !important;
+    margin: 100px;
+}
+
+a .nome-header {
+    text-decoration: none;
 }

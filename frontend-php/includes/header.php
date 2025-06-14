@@ -15,8 +15,16 @@
                         <a class="nav-link" href="listarEventos.php">Eventos</a>
                     </li>
                 </ul>
-                <div class="d-flex me-3">
-                    <a href="login.php"><button class="btn btn-primary">ENTRAR</button></a>
+
+                <div class="d-flex align-items-center me-3 ">
+                    <?php if (isset($_SESSION['aluno_logado']) && $_SESSION['aluno_logado'] === true): ?>
+                        <img src="../img/avatar.png" class="img-profile">
+                        <a href="perfilAluno.php" class="nome-header" style="text-decoration: none; color: inherit;"><?= $_SESSION['aluno_nome'] ?></a>
+
+
+                    <?php else: ?>
+                        <a href="login.php"><button class="btn btn-primary">ENTRAR</button></a>
+                    <?php endif ?>
                 </div>
             </div>
     </nav>

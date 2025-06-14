@@ -15,19 +15,18 @@ class Inscricao
 
         $resposta = $api->inscreverAluno($inscricao);
 
-        if ($resposta['code'] === 201) {
-            echo "Aluno inscrito com sucesso.";
-        } else if ($resposta['code'] === 400){
-            echo "Aluno já inscrito nesse evento";
-        } else {
-            echo "Erro ao inscrever aluno. Código: " . $resposta['code'];
-            print_r($resposta['body']); // para debug
-        }
+        return $resposta['code'];
     }
 
     public function desinscrever(int $id)
     {
         $api = new ApiNodeService();
         $inscricao = $api->desinscreverAluno($id);
+    }
+
+    public function listarInscricoesPorAluno(int $alunoId): array
+    {
+        $api = new ApiNodeService();
+        return $api->listarInscricoesPorAluno($alunoId);
     }
 }

@@ -52,6 +52,11 @@ class ApiNodeService
         return $this->request('/alunos', 'POST', $aluno);
     }
 
+    public function verificarLogin(array $aluno): array
+    {
+        return $this->request('/session', 'POST', $aluno);
+    }
+
     /*public function atualizarAluno(int $id, array $usuario): array
     {
         return $this->request("/aluno/{$id}", 'PUT', $usuario);
@@ -79,10 +84,14 @@ class ApiNodeService
         return $this->request("/inscricoes/{$id}", 'DELETE');
     }
 
+    public function listarInscricoesPorAluno(int $alunoId): array
+    {
+        return $this->request("/inscricoes/aluno/{$alunoId}");
+    }
+
     //Palestrante 
-        public function buscarPalestrante(int $id): array
+    public function buscarPalestrante(int $id): array
     {
         return $this->request("/palestrantes/{$id}");
     }
-
 }

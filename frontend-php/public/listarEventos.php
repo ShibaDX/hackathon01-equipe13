@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (isset($_SESSION['aluno_logado']) && $_SESSION['aluno_logado'] === true) {
+    echo "Sessão ativa. ID do aluno: " . $_SESSION['aluno_id'];
+} else {
+    echo "Usuário não está logado.";
+}
 require_once '../classes/Eventos.php';
 require_once '../classes/Palestrantes.php';
 
@@ -52,7 +59,7 @@ $dados = $evento->listarEventos();
                                     <p>Palestrante:
                                         <?php
                                         $dadosPalestrante = $palestrante->buscarPalestrante($eventoInfo['palestrante_id']);
-                                        $palestranteInfo = $dadosPalestrante['body'][0];
+                                        $palestranteInfo = $dadosPalestrante['body'];
                                         echo $palestranteInfo['nome'];
                                         ?>
                                     </p>
