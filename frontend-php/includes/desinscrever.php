@@ -12,5 +12,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Redireciona de volta para o perfil
-header('Location: perfilUsuario.php');
+header('Location: ../public/perfilAluno.php');
 exit;
