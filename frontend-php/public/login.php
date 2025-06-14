@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['aluno_id'] = $login['body']['aluno']['id'];
                 $_SESSION['aluno_nome'] = $login['body']['aluno']['nome'];
                 $_SESSION['aluno_email'] = $login['body']['aluno']['email'];
+                $_SESSION['token'] = $login['body']['token'];
                 echo $_SESSION['aluno_id'];
                 header("Location: index.php");
                 exit();

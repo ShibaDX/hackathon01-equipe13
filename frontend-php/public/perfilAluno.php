@@ -1,15 +1,11 @@
 <?php
 session_start();
+require_once '../includes/auth.php';
+require_auth();
 
 require_once '../classes/Inscricao.php';
 require_once '../classes/Eventos.php';
 require_once '../classes/Palestrantes.php';
-
-if (isset($_SESSION['aluno_logado']) && $_SESSION['aluno_logado'] === true) {
-    echo "Sessão ativa. ID do aluno: " . $_SESSION['aluno_id'];
-} else {
-    echo "Usuário não está logado.";
-}
 
 $inscricaoObj = new Inscricao();
 $eventoObj = new Eventos();
