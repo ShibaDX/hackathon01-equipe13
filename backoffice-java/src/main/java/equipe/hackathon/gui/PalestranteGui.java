@@ -40,7 +40,7 @@ public class PalestranteGui extends JFrame {
         tfId.setEditable(false);
         tfNome = new JTextField(20);
         cbTema = new JComboBox<>(new String[]{
-                "Selecione", "Geral", "Tecnologia" , "Empreendedorismo", "Saúde", "Direito", "Psicologia", "Educação", "Carreira"
+                "Geral", "Tecnologia" , "Empreendedorismo", "Saúde", "Direito", "Psicologia", "Educação", "Carreira"
         });
         tfFoto = new JTextField(30);
         taMiniCurriculo = new JTextArea(5, 30);
@@ -110,6 +110,14 @@ public class PalestranteGui extends JFrame {
         }));
     }
 
+    private Boolean isBlank(JTextField campo, String mensagem) {
+        if (campo.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, mensagem);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
     private void salvarPalestrante(ActionEvent event) {
         try {
             Palestrante palestrante = new Palestrante();
@@ -117,6 +125,9 @@ public class PalestranteGui extends JFrame {
             if (!tfId.getText().isEmpty()) {
                 palestrante.setId(Integer.parseInt(tfId.getText()));
             }
+
+            if (isBlank(tfNome, "Informe o Nome!")) return;
+            if (isBlank(tfFoto, "Por favor, insira uma foto!")) return;
 
             palestrante.setNome(tfNome.getText());
             palestrante.setTema(cbTema.getSelectedItem().toString());

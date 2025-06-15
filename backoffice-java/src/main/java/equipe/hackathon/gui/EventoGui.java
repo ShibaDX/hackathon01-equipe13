@@ -57,7 +57,7 @@ public class EventoGui extends JFrame {
         tfData = new JTextField(10);
         tfHora = new JTextField(5);
         cbCurso = new JComboBox<>(new String[]{
-                "Selecione", "Geral", "Sistemas para Internet", "Direito", "Psicologia", "Pedagogia", "Administração"
+                "Geral", "Sistemas para Internet", "Direito", "Psicologia", "Pedagogia", "Administração"
         });
         tfLugar = new JTextField(20);
         tfFoto = new JTextField(30);
@@ -182,6 +182,14 @@ public class EventoGui extends JFrame {
         });
     }
 
+    private Boolean isBlank(JTextField campo, String mensagem) {
+        if (campo.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, mensagem);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
     private void salvarEvento(ActionEvent event) {
         try {
             Evento evento = new Evento();
@@ -189,6 +197,12 @@ public class EventoGui extends JFrame {
             if (!tfId.getText().isEmpty()) {
                 evento.setId(Long.parseLong(tfId.getText()));
             }
+
+            if (isBlank(tfTitulo, "Informe o Titulo!")) return;
+            if (isBlank(tfLugar, "Informe o Local!")) return;
+            if (isBlank(tfData, "Informe a Data!")) return;
+            if (isBlank(tfHora, "Informe o Horário!")) return;
+            if (isBlank(tfFoto, "Por favor, insira uma foto!")) return;
 
             evento.setTitulo(tfTitulo.getText());
             evento.setDescricao(tfDescricao.getText());
@@ -333,7 +347,6 @@ public class EventoGui extends JFrame {
             }
         }
     }
-
 
 
     private void limparCampos() {
