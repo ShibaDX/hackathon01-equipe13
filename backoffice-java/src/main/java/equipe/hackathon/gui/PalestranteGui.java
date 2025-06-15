@@ -179,11 +179,32 @@ public class PalestranteGui extends JFrame {
         seletorDeArquivo.setDialogTitle("Selecione uma imagem para o palestrante");
         seletorDeArquivo.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
                 "Arquivos de Imagem", "jpg", "jpeg", "png", "gif"));
-        
+
         int resultado = seletorDeArquivo.showOpenDialog(this);
         if (resultado == JFileChooser.APPROVE_OPTION) {
             java.io.File arquivoSelecionado = seletorDeArquivo.getSelectedFile();
-            tfFoto.setText(arquivoSelecionado.getAbsolutePath());
+            String nomeArquivo = arquivoSelecionado.getName();
+
+            // Caminho relativo até a pasta de destino no frontend-php
+            String caminhoDestino = "../frontend-php/img/uploads/" + nomeArquivo;
+
+            java.nio.file.Path origem = arquivoSelecionado.toPath();
+            java.nio.file.Path destino = java.nio.file.Paths.get(caminhoDestino).normalize();
+
+            try {
+                // Cria a pasta de destino se não existir
+                java.nio.file.Files.createDirectories(destino.getParent());
+
+                // Copia o arquivo (sobrescreve se já existir)
+                java.nio.file.Files.copy(origem, destino, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+                // Salva apenas o nome do arquivo
+                tfFoto.setText(nomeArquivo);
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao copiar a imagem: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
         }
     }
 
