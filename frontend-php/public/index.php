@@ -29,7 +29,10 @@ $dados = $evento->listarEventos();
 
 <body>
     <?php require_once '../includes/header.php' ?>
-    <div class="banner"></div>
+    <div class="banner">
+        <h1>Bem-vindo a Alfa Eventos</h1>
+        <h4 class="pt-5">"Eventos que inspiram, conectam e transformam o ambiente acadêmico em algo ainda maior."</h4>
+    </div>
 
     <?php
     $eventosFiltrados = [];
@@ -53,7 +56,7 @@ $dados = $evento->listarEventos();
                     $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
                 ?>
 
-                    <div class="card d-inline-block" style="width: 18rem;">
+                    <div class="card d-inline-block border-primary" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title"><?= $eventoInfo['titulo'] ?></h5>
                             <p><i class="fa-solid fa-location-dot"></i> <strong><?= $eventoInfo['lugar'] ?></strong></p>
@@ -81,7 +84,9 @@ $dados = $evento->listarEventos();
         </div>
 
         <div class="container mt-5">
-            <h3 class="pb-3">Em breve</h3>
+            <div class="text-bg">
+                <h3 class="pb-3">Em breve</h3>
+            </div>
 
             <div class="eventos-linha">
                 <?php if (($dados['code'] === 200) && (is_array($dados['body'])) && (!is_null($dados['body']))): ?>
@@ -89,7 +94,7 @@ $dados = $evento->listarEventos();
                         $dataFormatada = date('d/m/Y', strtotime($eventoInfo['data']));
                         $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
                     ?>
-                        <div class="card d-inline-block" style="width: 18rem;">
+                        <div class="card d-inline-block border-primary" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title"><?= $eventoInfo['titulo'] ?></h5>
                                 <p><i class="fa-solid fa-location-dot"></i> <strong><?= $eventoInfo['lugar'] ?></strong></p>

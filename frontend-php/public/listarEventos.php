@@ -59,7 +59,7 @@ $dados = $evento->listarEventos();
                     $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
             ?>
                     <div class="col-lg-3 mb-4">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card border-primary" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title"><?= $eventoInfo['titulo'] ?></h5>
                                 <p><?= $eventoInfo['curso'] ?></p>
