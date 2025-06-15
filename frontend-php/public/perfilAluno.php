@@ -37,31 +37,31 @@ var_dump($inscricoes);
 <body>
     <?php require_once '../includes/header.php' ?>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="modalLogout" tabindex="-1" aria-labelledby="modalLabelLogout" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="modalLabelLogout">Confirmar Logout</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Tem certeza que deseja sair da conta?
-                                    </div>
-                                    <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            <a href="../includes/logout.php"><button class="btn btn-danger">Sair da conta</button></a>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalLogout" tabindex="-1" aria-labelledby="modalLabelLogout" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalLabelLogout">Confirmar Logout</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja sair da conta?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="../includes/logout.php"><button class="btn btn-danger">Sair da conta</button></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="d-flex justify-content-end me-4 mt-3">
-    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalLogout">
-        Sair
-    </button>
-</div>
+    <div class="d-flex justify-content-end me-4 mt-3">
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalLogout">
+            Sair
+        </button>
+    </div>
 
     <div class="container ps-5">
         <h2>Meu Perfil</h2>
@@ -108,10 +108,17 @@ var_dump($inscricoes);
                         </div>
                     </div>
                     <div>
-                        <!-- Botão que abre o modal -->
+
+                        <form action="certificado.php" method="POST">
+                            <input type="hidden" name="titulo_evento" value="<?= $e['titulo'] ?>">
+                            <input type="hidden" name="data_evento" value="<?= date('d/m/Y', strtotime($e['data'])) ?>">
+                            <input type="hidden" name="nome_aluno" value="<?= $_SESSION['aluno_nome'] ?>">
+                            <input type="hidden" name="nome_palestrante" value="<?= $palestranteInfo['nome'] ?>">
+                            <button type="submit" class="btn btn-outline-primary">Certificado</button>
+                        </form>
+
                         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalExcluir<?= $inscricao['id'] ?>">Desinscrever</button>
 
-                        <!-- Modal -->
                         <div class="modal fade" id="modalExcluir<?= $inscricao['id'] ?>" tabindex="-1" aria-labelledby="modalLabel<?= $inscricao['id'] ?>" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">

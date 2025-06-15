@@ -30,8 +30,8 @@ router.post('/', async (req, res) => {
     )
 
     if (!senhaIsIgual) {
-        res.status(400)
-        .json({ message: 'Email ou senha incorretos!' })
+        res.status(400).json({ message: 'Email ou senha incorretos!' })
+        return
     }
 
     const token = sign(

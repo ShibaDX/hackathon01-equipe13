@@ -19,7 +19,7 @@
                 <div class="d-flex align-items-center me-3 ">
                     <?php if (isset($_SESSION['aluno_logado']) && $_SESSION['aluno_logado'] === true): ?>
                         <img src="../img/avatar.png" class="img-profile">
-                        <a href="perfilAluno.php" class="nome-header" style="text-decoration: none; color: inherit;"><?= $_SESSION['aluno_nome'] ?></a>
+                        <a href="perfilAluno.php" class="nome-header ms-2" style="text-decoration: none; color: inherit;"><?= $_SESSION['aluno_nome'] ?></a>
 
 
                     <?php else: ?>
