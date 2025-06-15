@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 public class PalestranteGui extends JFrame {
     private JTextField tfId;
     private JTextField tfNome;
-    private JTextField tfTema;
+    private JComboBox<String> cbTema;
     private JTextField tfFoto;
     private JTextArea taMiniCurriculo;
     private JTable tbPalestrantes;
@@ -39,7 +39,9 @@ public class PalestranteGui extends JFrame {
         tfId = new JTextField(10);
         tfId.setEditable(false);
         tfNome = new JTextField(20);
-        tfTema = new JTextField(20);
+        cbTema = new JComboBox<>(new String[]{
+                "Selecione", "Geral", "Tecnologia" , "Empreendedorismo", "Saúde", "Direito", "Psicologia", "Educação", "Carreira"
+        });
         tfFoto = new JTextField(30);
         taMiniCurriculo = new JTextArea(5, 30);
         JScrollPane scrollCurriculo = new JScrollPane(taMiniCurriculo);
@@ -61,7 +63,7 @@ public class PalestranteGui extends JFrame {
         painelForm.add(tfNome, guiUtils.montarConstraints(1, 1));
 
         painelForm.add(new JLabel("Tema:"), guiUtils.montarConstraints(0, 2));
-        painelForm.add(tfTema, guiUtils.montarConstraints(1, 2));
+        painelForm.add(cbTema, guiUtils.montarConstraints(1, 2));
 
         painelForm.add(new JLabel("Foto:"), guiUtils.montarConstraints(0, 3));
         JPanel painelFoto = new JPanel(new BorderLayout());
@@ -117,7 +119,7 @@ public class PalestranteGui extends JFrame {
             }
 
             palestrante.setNome(tfNome.getText());
-            palestrante.setTema(tfTema.getText());
+            palestrante.setTema(cbTema.getSelectedItem().toString());
             palestrante.setFoto(tfFoto.getText());
             palestrante.setDescricao(taMiniCurriculo.getText());
 
@@ -169,7 +171,7 @@ public class PalestranteGui extends JFrame {
     private void limparCampos() {
         tfId.setText("");
         tfNome.setText("");
-        tfTema.setText("");
+        cbTema.setSelectedIndex(0);
         tfFoto.setText("");
         taMiniCurriculo.setText("");
     }
@@ -217,7 +219,7 @@ public class PalestranteGui extends JFrame {
                 if (palestrante != null) {
                     tfId.setText(String.valueOf(palestrante.getId()));
                     tfNome.setText(palestrante.getNome());
-                    tfTema.setText(palestrante.getTema());
+                    cbTema.setSelectedItem(palestrante.getTema());
                     tfFoto.setText(palestrante.getFoto());
                     taMiniCurriculo.setText(palestrante.getDescricao());
                 }

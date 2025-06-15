@@ -21,7 +21,7 @@ public class EventoGui extends JFrame {
     private JTextField tfDescricao;
     private JTextField tfData;
     private JTextField tfHora;
-    private JTextField tfCurso;
+    private JComboBox<String> cbCurso;
     private JTextField tfLugar;
     private JTextField tfFoto;
     private JComboBox<Palestrante> cbPalestrantes;
@@ -56,7 +56,9 @@ public class EventoGui extends JFrame {
         tfDescricao = new JTextField(20);
         tfData = new JTextField(10);
         tfHora = new JTextField(5);
-        tfCurso = new JTextField(15);
+        cbCurso = new JComboBox<>(new String[]{
+                "Selecione", "Geral", "Sistemas para Internet", "Direito", "Psicologia", "Pedagogia", "Administração"
+        });
         tfLugar = new JTextField(20);
         tfFoto = new JTextField(30);
         cbPalestrantes = new JComboBox<>();
@@ -87,7 +89,7 @@ public class EventoGui extends JFrame {
         painelForm.add(tfHora, guiUtils.montarConstraints(1, 4));
 
         painelForm.add(new JLabel("Curso:"), guiUtils.montarConstraints(0, 5));
-        painelForm.add(tfCurso, guiUtils.montarConstraints(1, 5));
+        painelForm.add(cbCurso, guiUtils.montarConstraints(1, 5));
 
         painelForm.add(new JLabel("Lugar:"), guiUtils.montarConstraints(0, 6));
         painelForm.add(tfLugar, guiUtils.montarConstraints(1, 6));
@@ -192,7 +194,7 @@ public class EventoGui extends JFrame {
             evento.setDescricao(tfDescricao.getText());
             evento.setData(LocalDate.parse(tfData.getText(), dateFormatter));
             evento.setHora(LocalTime.parse(tfHora.getText(), timeFormatter));
-            evento.setCurso(tfCurso.getText());
+            evento.setCurso(cbCurso.getSelectedItem().toString());
             evento.setLugar(tfLugar.getText());
             evento.setFoto(tfFoto.getText());
 
@@ -265,7 +267,7 @@ public class EventoGui extends JFrame {
         tfDescricao.setText(evento.getDescricao());
         tfData.setText(evento.getData() != null ? dateFormatter.format(evento.getData()) : "");
         tfHora.setText(evento.getHora() != null ? timeFormatter.format(evento.getHora()) : "");
-        tfCurso.setText(evento.getCurso());
+        cbCurso.setSelectedItem(evento.getCurso());
         tfLugar.setText(evento.getLugar());
         tfFoto.setText(evento.getFoto());
 
@@ -340,7 +342,7 @@ public class EventoGui extends JFrame {
         tfDescricao.setText("");
         tfData.setText("");
         tfHora.setText("");
-        tfCurso.setText("");
+        cbCurso.setSelectedIndex(0);
         tfLugar.setText("");
         tfFoto.setText("");
         cbPalestrantes.setSelectedIndex(-1);
