@@ -57,6 +57,7 @@ $html = "
 </html>
 ";
 
+
 $dompdf->loadHtml($html);
 $dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
