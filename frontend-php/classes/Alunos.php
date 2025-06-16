@@ -25,10 +25,12 @@ class Alunos
         $resposta = $api->cadastrarAluno($aluno);
 
         if ($resposta['code'] === 201) {
-            echo "Aluno cadastrado com sucesso.";
+            return true;
         } else {
-            echo "Erro ao cadastrar aluno. Código: " . $resposta['code'];
-            print_r($resposta['body']); // para debug
+            $mensagem = is_array($resposta['body']) && isset($resposta['body']['mesage'])
+            ? $resposta['body']['message'] 
+            : 'ERRO desconhecido ao cadastrar aluno.';
+            throw new Exception($mensagem);// para debug
         }
     }
 
@@ -74,8 +76,11 @@ class Alunos
         if ($resposta['code'] === 200) {
             return $resposta;
         } else {
-            echo "Erro ao logar. Código: " . $resposta['code'];
-            print_r($resposta['body']); // para debug
+            $mensagem = is_array($resposta['body']) && isset($resposta['body']['message']) // para debug
+            ? $resposta['body']['message']
+            : 'Erro ao fazer login';
+
+            throw new Exception($mensagem);
         }
     }
 

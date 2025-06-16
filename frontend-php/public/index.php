@@ -115,7 +115,7 @@ $dados = $evento->listarEventos();
     </div>
 
     <div class="container mt-5">
-        <h3 class="pb-3">Em breve</h3>
+        <h3 class="pb-3">Em Breve</h3>
 
         <div class="eventos-linha">
             <?php if (($dados['code'] === 200) && (is_array($dados['body'])) && (!is_null($dados['body']))): ?>
