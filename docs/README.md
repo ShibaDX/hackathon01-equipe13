@@ -1,7 +1,7 @@
 # Hotsite de Eventos
-<p>O sistema é uma plataforma interativa voltada para a organização e divulgação de eventos acadêmicos da faculdade, como jornadas, semanas acadêmicas, seminários, palestras e cursos.
+<p>Este sistema é uma plataforma interativa voltada para a organização e divulgação de eventos acadêmicos de uma faculdade, como jornadas acadêmicas, seminários, palestras e cursos.
 
-O objetivo principal é oferecer uma solução simples e centralizada, onde os eventos sejam o destaque. A navegação deve ser intuitiva, complicações ou informações espalhadas, permitindo que os usuários encontrem e acompanhem os eventos com facilidade. </p>
+O objetivo principal é oferecer uma solução simples e centralizada, onde os eventos sejam o destaque. A navegação deve ser intuitiva, sem complicações ou informações espalhadas, permitindo que os usuários encontrem e acompanhem os eventos com facilidade.</p>
 
 ## Colaboradores do Projeto
 
@@ -13,9 +13,9 @@ O objetivo principal é oferecer uma solução simples e centralizada, onde os e
 
 ---
 
-# Resumo do Funcionamento do Projeto
+# Resumo do Funcionamento do Sistema
 
-O projeto é dividido em três camadas principais, cada uma com uma tecnologia específica e função bem definida:
+O sistema é dividido em três camadas principais, cada uma com uma tecnologia específica e função bem definida:
 
 ## Java (Back Office – Camada Administrativa)
 
