@@ -90,10 +90,6 @@ footer {
     border-radius: 100%;
 }
 
-.img-visualizar{
-    
-}
-
 .perfil-avatar img {
     width: 100px;
     border-radius: 100%;
@@ -112,10 +108,10 @@ footer {
 }
 
 .evento-imagem img {
-    width: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: auto;
+    width: 160px;
+    border-radius: 7px;
+    margin-right: 10px;
 }
 
 .evento-info p {

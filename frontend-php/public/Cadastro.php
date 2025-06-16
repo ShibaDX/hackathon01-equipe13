@@ -12,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telefone = $_POST['telefone'] ?? '';
     $cpf = $_POST['cpf'] ?? '';
 
+    var_dump($cpf);
+
     try {
         // Chamada para a API Node.js
         $alunoService->criarAluno($nome, $email, $senha, $telefone, $cpf);
@@ -30,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require_once '../includes/bootstrap_css.php'; ?>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="../img/logo.png">
     <title>Cadastro</title>
 </head>
 
@@ -52,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="alert alert-danger"><?= $erro ?></div>
                         <?php endif; ?>
 
-                        <form method="POST">
+                        <form method="POST" id="form_cad">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="nome" class="form-label">Nome Completo</label>
@@ -77,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <div class="mb-3">
                                 <label for="cpf" class="form-label">CPF</label>
-                                <input type="text" class="form-control" id="cpf" name="cpf" minlength="11" maxlength="11" required>
+                                <input type="text" class="form-control" id="cpf" name="cpf" minlength="14" maxlength="14" required>
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100">
@@ -98,7 +101,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once '../includes/footer.php';
     require_once '../includes/bootstrap_js.php';
     ?>
+    <!-- biblioteca JS para aplicar máscaras em inputs -->
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
+            // Validador de CPF
+            function validarCPF(cpf) {
+                cpf = cpf.replace(/[^\d]+/g, '');
+
+                if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+
+                let soma = 0;
+                for (let i = 0; i < 9; i++) {
+                    soma += parseInt(cpf.charAt(i)) * (10 - i);
+                }
+
+                let resto = (soma * 10) % 11;
+                if (resto === 10 || resto === 11) resto = 0;
+                if (resto !== parseInt(cpf.charAt(9))) return false;
+
+                soma = 0;
+                for (let i = 0; i < 10; i++) {
+                    soma += parseInt(cpf.charAt(i)) * (11 - i);
+                }
+
+                resto = (soma * 10) % 11;
+                if (resto === 10 || resto === 11) resto = 0;
+                if (resto !== parseInt(cpf.charAt(10))) return false;
+
+                return true;
+            }
+
+            const telefoneInput = document.getElementById('telefone');
+            const cpfInput = document.getElementById('cpf');
+
+            // máscaras para os inputs
+            IMask(telefoneInput, {
+                mask: '(00) 00000-0000'
+            });
+
+            const cpfMask = IMask(cpfInput, {
+                mask: '000.000.000-00'
+            });
+
+            // Validação no envio do formulário
+            document.getElementById('form_cad').addEventListener('submit', function(e) {
+                const cpfLimpo = cpfMask.unmaskedValue;
+
+                if (!validarCPF(cpfLimpo)) {
+                    e.preventDefault(); // impede envio
+                    alert('CPF inválido. Por favor, verifique e tente novamente.');
+                    cpfInput.focus();
+                } else {
+                    cpfInput.value = cpfLimpo; // remove máscara antes de enviar
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

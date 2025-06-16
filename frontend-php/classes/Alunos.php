@@ -27,28 +27,12 @@ class Alunos
         if ($resposta['code'] === 201) {
             return true;
         } else {
-            $mensagem = is_array($resposta['body']) && isset($resposta['body']['mesage'])
+            $mensagem = is_array($resposta['body']) && isset($resposta['body']['message'])
             ? $resposta['body']['message'] 
             : 'ERRO desconhecido ao cadastrar aluno.';
             throw new Exception($mensagem);// para debug
         }
     }
-
-    /*  public function validarLogin($email, $senha)
-    {
-        $sql = "SELECT id, nome, senha from usuarios WHERE email = :email";
-
-        $query = $this->db->prepare($sql);
-        $query->execute(['email' => $email]);
-
-        $usuario = $query->fetch(PDO::FETCH_ASSOC);
-
-        if ($usuario && password_verify($senha, $usuario['senha'])) {
-            return $usuario;
-        }
-
-        return false;
-    } */
 
     public function buscarAluno(int $id)
     {

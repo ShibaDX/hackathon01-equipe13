@@ -5,21 +5,11 @@ require_once '../classes/Inscricao.php';
 require_once '../classes/Eventos.php';
 require_once '../classes/Palestrantes.php';
 
-if (isset($_SESSION['aluno_logado']) && $_SESSION['aluno_logado'] === true) {
-    echo "Sessão ativa. ID do aluno: " . $_SESSION['aluno_id'];
-} else {
-    echo "Usuário não está logado.";
-}
-
 $inscricaoObj = new Inscricao();
 $eventoObj = new Eventos();
 $palestrante = new Palestrantes();
 
-
-// Suponha que exista esse método na API PHP que retorna as inscrições do aluno
 $inscricoes = $inscricaoObj->listarInscricoesPorAluno($_SESSION['aluno_id']);
-var_dump($inscricoes);
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -81,7 +71,7 @@ var_dump($inscricoes);
     </div>
     <h2 class="ms-5 mb-5 mt-5">Eventos Inscritos</h2>
     <?php
-    // Agora percorremos cada inscrição e buscamos os dados do evento
+
     foreach ($inscricoes['body'] as $inscricao) {
         $eventoId = $inscricao['evento_id'];
 
@@ -91,58 +81,69 @@ var_dump($inscricoes);
             $e = $evento['body'][0];
 
     ?>
-            <div class="container evento-container mb-3">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-start">
-                        <div class="evento-imagem me-3">
-                            <img src="<?php echo Eventos::IMG_DIR . $e['foto']; ?>" alt="Imagem do evento" width="120" height="80">
-                        </div>
-                        <div class="evento-info">
-                            <strong><?php echo htmlspecialchars($e['titulo']); ?> - <?php echo htmlspecialchars($e['curso']); ?></strong>
-                            <p><?php
-                                $dadosPalestrante = $palestrante->buscarPalestrante($e['palestrante_id']);
-                                $palestranteInfo = $dadosPalestrante['body'];
-                                echo $palestranteInfo['nome']; ?></p>
-                            <p><?php echo htmlspecialchars($e['lugar']); ?></p>
-                            <p><?php echo date('d/m/Y', strtotime($e['data'])); ?> - <?= date('H:i', strtotime($e['hora'])); ?></p>
-                        </div>
-                    </div>
-                    <div>
+<div class="container evento-container mb-3">
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-start">
 
-                        <form action="certificado.php" method="POST">
-                            <input type="hidden" name="titulo_evento" value="<?= $e['titulo'] ?>">
-                            <input type="hidden" name="data_evento" value="<?= date('d/m/Y', strtotime($e['data'])) ?>">
-                            <input type="hidden" name="nome_aluno" value="<?= $_SESSION['aluno_nome'] ?>">
-                            <input type="hidden" name="nome_palestrante" value="<?= $palestranteInfo['nome'] ?>">
-                            <button type="submit" class="btn btn-outline-primary">Certificado</button>
-                        </form>
+    <!-- Imagem -->
+    <div class="evento-imagem mb-2 mb-md-0 order-1 order-md-1" style="flex-shrink: 0;">
+      <img src="<?php echo Eventos::IMG_DIR . $e['foto']; ?>" alt="Imagem do evento" width="120" height="80" class="">
+    </div>
 
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalExcluir<?= $inscricao['id'] ?>">Desinscrever</button>
+    <!-- Informações do evento -->
+    <div class="evento-info order-2 order-md-2 flex-grow-1 me-md-3 mb-3">
+      <strong><?= $e['titulo'] ?> - <?= $e['curso'] ?></strong>
+      <p>
+        <?php
+          $dadosPalestrante = $palestrante->buscarPalestrante($e['palestrante_id']);
+          $palestranteInfo = $dadosPalestrante['body'];
+          echo $palestranteInfo['nome'];
+        ?>
+      </p>
+      <p><?= $e['lugar'] ?></p>
+      <p><?= date('d/m/Y', strtotime($e['data'])); ?> - <?= date('H:i', strtotime($e['hora'])) ?></p>
+    </div>
 
-                        <div class="modal fade" id="modalExcluir<?= $inscricao['id'] ?>" tabindex="-1" aria-labelledby="modalLabel<?= $inscricao['id'] ?>" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="modalLabel<?= $inscricao['id'] ?>">Confirmar desinscrição</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Tem certeza que deseja se desinscrever deste evento?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <form method="POST" action="../includes/desinscrever.php">
-                                            <input type="hidden" name="inscricao_id" value="<?= $inscricao['id'] ?>">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-danger">Sim, desinscrever</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <!-- Botões -->
+    <div class="d-flex flex-column gap-1 order-3 order-md-3" style="min-width: 120px;">
+      <form action="certificado.php" method="POST" class="mb-2">
+        <input type="hidden" name="titulo_evento" value="<?= $e['titulo'] ?>">
+        <input type="hidden" name="data_evento" value="<?= date('d/m/Y', strtotime($e['data'])) ?>">
+        <input type="hidden" name="nome_aluno" value="<?= $_SESSION['aluno_nome'] ?>">
+        <input type="hidden" name="nome_palestrante" value="<?= $palestranteInfo['nome'] ?>">
+        <button type="submit" class="btn btn-outline-primary w-100">Certificado</button>
+      </form>
 
-                    </div>
-                </div>
+      <button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#modalExcluir<?= $inscricao['id'] ?>">
+        Desinscrever
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="modalExcluir<?= $inscricao['id'] ?>" tabindex="-1" aria-labelledby="modalLabel<?= $inscricao['id'] ?>" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="modalLabel<?= $inscricao['id'] ?>">Confirmar desinscrição</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
+            <div class="modal-body">
+              Tem certeza que deseja se desinscrever deste evento?
+            </div>
+            <div class="modal-footer">
+              <form method="POST" action="../includes/desinscrever.php">
+                <input type="hidden" name="inscricao_id" value="<?= $inscricao['id'] ?>">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-danger">Sim, desinscrever</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
     <?php
         }
     }
