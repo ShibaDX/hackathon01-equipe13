@@ -41,15 +41,19 @@ public class EventoService {
         }
         return eventos;
     }
-    
+
     public Evento buscarEventoPorId(long id) {
         EventoDao dao = new EventoDao();
         List<Object> resultados = dao.select(id);
         return resultados.isEmpty() ? null : (Evento) resultados.get(0);
     }
 
-    public boolean existeEventoNaMesmaDataHora(LocalDate data, LocalTime hora) {
+    public boolean existeEventoNaMesmaDataHora(LocalDate data, LocalTime hora, Long idAtual) {
         return listarEventos().stream()
-                .anyMatch(e -> e.getData().equals(data) && e.getHora().equals(hora));
+                .anyMatch(e ->
+                        e.getData().equals(data) &&
+                                e.getHora().equals(hora) &&
+                                (idAtual == null || e.getId() != idAtual)
+                );
     }
 }

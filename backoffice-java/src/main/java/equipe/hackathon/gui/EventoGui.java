@@ -220,7 +220,11 @@ public class EventoGui extends JFrame {
             boolean sucesso;
 
             boolean novoEvento = evento.getId() == 0;
-            boolean horarioOcupado = eventoService.existeEventoNaMesmaDataHora(evento.getData(), evento.getHora());
+            boolean horarioOcupado = eventoService.existeEventoNaMesmaDataHora(
+                    evento.getData(),
+                    evento.getHora(),
+                    evento.getId() == 0 ? null : evento.getId()
+            );
 
             if (horarioOcupado) {
                 JOptionPane.showMessageDialog(this, "Já existe um evento cadastrado nesse horário!", "Conflito de Horário", JOptionPane.WARNING_MESSAGE);
