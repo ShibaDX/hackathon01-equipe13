@@ -218,11 +218,19 @@ public class EventoGui extends JFrame {
             }
 
             boolean sucesso;
-            if (evento.getId() == 0) {
-                sucesso = eventoService.cadastrarEvento(evento);
-            } else {
-                sucesso = eventoService.atualizarEvento(evento);
+
+            boolean novoEvento = evento.getId() == 0;
+            boolean horarioOcupado = eventoService.existeEventoNaMesmaDataHora(evento.getData(), evento.getHora());
+
+            if (horarioOcupado) {
+                JOptionPane.showMessageDialog(this, "Já existe um evento cadastrado nesse horário!", "Conflito de Horário", JOptionPane.WARNING_MESSAGE);
+                return;
             }
+
+            // if ternário, se o evento for novo cadastra, se já existir atualiza
+            sucesso = novoEvento
+                    ? eventoService.cadastrarEvento(evento)
+                    : eventoService.atualizarEvento(evento);
 
             if (sucesso) {
                 JOptionPane.showMessageDialog(this, "Evento salvo com sucesso!");

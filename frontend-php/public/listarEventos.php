@@ -30,7 +30,7 @@ $dados = $evento->listarEventos();
         <form method="GET" id="formFiltro">
             <select name="curso" id="filtro" class="form-select" style="width: 210px" onchange="document.getElementById('formFiltro').submit()">
                 <option value="">Todos</option>
-                <option value="Sistemas para Internet" <?= ($_GET['curso'] ?? '') === 'Sistemas para Internet' ? 'selected' : '' ?> >Sistemas para Intenet</option>
+                <option value="Sistemas para Internet" <?= ($_GET['curso'] ?? '') === 'Sistemas para Internet' ? 'selected' : '' ?>>Sistemas para Internet</option>
                 <option value="Direito" <?= ($_GET['curso'] ?? '') === 'Direito' ? 'selected' : '' ?>>Direito</option>
                 <option value="Pedagogia" <?= ($_GET['curso'] ?? '') === 'Pedagogia' ? 'selected' : '' ?>>Pedagogia</option>
                 <option value="Psicologia" <?= ($_GET['curso'] ?? '') === 'Psicologia' ? 'selected' : '' ?>>Psicologia</option>
@@ -44,9 +44,10 @@ $dados = $evento->listarEventos();
 
             if (($dados['code'] === 200) && is_array($dados['body'])) {
                 // Aplica o filtro, se existir
-                $eventosFiltrados = !empty($_GET['curso'])
+                $eventosFiltrados = !empty($_GET['curso']) 
                     ? array_filter($dados['body'], fn($evento) => $evento['curso'] === $_GET['curso'])
                     : $dados['body'];
+                    // Se existir o parâmetro 'curso' na URL, filtra os eventos e mantém só os que têm o campo 'curso' igual ao valor informado
             }
 
             if (!empty($eventosFiltrados)):

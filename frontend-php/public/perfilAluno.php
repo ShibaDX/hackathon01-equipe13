@@ -92,15 +92,15 @@ $inscricoes = $inscricaoObj->listarInscricoesPorAluno($_SESSION['aluno_id']);
     <!-- Informações do evento -->
     <div class="evento-info order-2 order-md-2 flex-grow-1 me-md-3 mb-3">
       <strong><?= $e['titulo'] ?> - <?= $e['curso'] ?></strong>
-      <p>
+      <p><strong>Palestrante: </strong>
         <?php
           $dadosPalestrante = $palestrante->buscarPalestrante($e['palestrante_id']);
           $palestranteInfo = $dadosPalestrante['body'];
           echo $palestranteInfo['nome'];
         ?>
       </p>
-      <p><?= $e['lugar'] ?></p>
-      <p><?= date('d/m/Y', strtotime($e['data'])); ?> - <?= date('H:i', strtotime($e['hora'])) ?></p>
+      <p><strong>Local: </strong><?= $e['lugar'] ?></p>
+      <p><strong>Data: </strong><?= date('d/m/Y', strtotime($e['data'])); ?> - <strong>Horário</strong> <?= date('H:i', strtotime($e['hora'])) ?></p>
     </div>
 
     <!-- Botões -->

@@ -12,8 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telefone = $_POST['telefone'] ?? '';
     $cpf = $_POST['cpf'] ?? '';
 
-    var_dump($cpf);
-
     try {
         // Chamada para a API Node.js
         $alunoService->criarAluno($nome, $email, $senha, $telefone, $cpf);
@@ -154,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     alert('CPF inválido. Por favor, verifique e tente novamente.');
                     cpfInput.focus();
                 } else {
-                    cpfInput.value = cpfLimpo; // remove máscara antes de enviar
+                    cpfInput.value = cpfLimpo; // remove a máscara antes de enviar
                 }
             });
         });
