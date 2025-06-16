@@ -51,6 +51,7 @@ $dados = $evento->listarEventos();
 
         <div class="container">
 
+
             <div class="eventos-linha">
                 <?php foreach ($eventosFiltrados as $eventoInfo):
                     $dataFormatada = date('d/m/Y', strtotime($eventoInfo['data']));
