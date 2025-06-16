@@ -35,10 +35,11 @@ $dados = $evento->listarEventos();
         <form method="GET" id="formFiltro">
             <select name="curso" id="filtro" class="form-select" style="width: 150px" onchange="document.getElementById('formFiltro').submit()">
                 <option value="">Todos</option>
-                <option value="Informática" <?= ($_GET['curso'] ?? '') === 'Informática' ? 'selected' : '' ?>>Informática</option>
+                <option value="Sistemas para Internet" <?= ($_GET['curso'] ?? '') === 'Sistemas para Internet' ? 'selected' : '' ?> >Sistemas para Intenet</option>
                 <option value="Direito" <?= ($_GET['curso'] ?? '') === 'Direito' ? 'selected' : '' ?>>Direito</option>
                 <option value="Pedagogia" <?= ($_GET['curso'] ?? '') === 'Pedagogia' ? 'selected' : '' ?>>Pedagogia</option>
                 <option value="Psicologia" <?= ($_GET['curso'] ?? '') === 'Psicologia' ? 'selected' : '' ?>>Psicologia</option>
+                <option value="Administração" <?= ($_GET['curso'] ?? '') === 'Administração' ? 'selected' : '' ?>>Administração</option>
             </select>
         </form>
 
@@ -59,7 +60,7 @@ $dados = $evento->listarEventos();
                     $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
             ?>
                     <div class="col-lg-3 mb-4">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card border-primary" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title"><?= $eventoInfo['titulo'] ?></h5>
                                 <p><?= $eventoInfo['curso'] ?></p>
