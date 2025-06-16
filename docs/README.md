@@ -41,6 +41,6 @@ O sistema é dividido em três camadas principais, cada uma com uma tecnologia e
 # Fluxo Geral:
 
 1. A equipe da IES utiliza o sistema em Java para cadastrar ou atualizar os eventos e palestrantes.
-2. A aplicação em PHP consome a API Node.js, que atua como ponte entre o front-end e o banco de dados, realizando as operações de exibição dos eventos e inscrições.
+2. A API Node.js atua como ponte entre o front-end e o banco de dados, realizando as operações de exibição dos eventos e inscrições.
 3. O site em PHP consulta a API Node.js para exibir os eventos ao público.
 
