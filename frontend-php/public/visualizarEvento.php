@@ -17,21 +17,27 @@ $dataFormatada = date('d/m/Y', strtotime($eventoInfo['data']));
 $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $aluno_id = $_POST['aluno_id'];
-    $evento_id = $_POST['evento_id'];
 
-    try {
-        $code = $inscricao->inscrever($aluno_id, $evento_id);
-        if ($code === 201) {
-            $sucesso = "Aluno inscrito com sucesso.";
-        } else if ($code === 400) {
-            $erro = "Aluno já inscrito nesse evento";
-        } else {
-            $erro = "Erro ao inscrever aluno. Código: $code";
+    if (!isset($_SESSION['aluno_logado']) || !$_SESSION['aluno_logado'] == true) {
+        $erro = 'Você precisa entrar em uma conta para se inscrever';
+    } else {
+
+        $aluno_id = $_POST['aluno_id'];
+        $evento_id = $_POST['evento_id'];
+
+        try {
+            $code = $inscricao->inscrever($aluno_id, $evento_id);
+            if ($code === 201) {
+                $sucesso = "Aluno inscrito com sucesso.";
+            } else if ($code === 400) {
+                $erro = "Aluno já inscrito nesse evento";
+            } else {
+                $erro = "Erro ao inscrever aluno. Código: $code";
+            }
+        } catch (Exception $e) {
+            $erro = 'Erro ao inscrever: ' . $e->getMessage();
+            echo "<br>Erro";
         }
-    } catch (Exception $e) {
-        $erro = 'Erro ao inscrever: ' . $e->getMessage();
-        echo "<br>Erro";
     }
 }
 
