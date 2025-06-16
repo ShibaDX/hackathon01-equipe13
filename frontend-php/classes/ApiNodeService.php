@@ -11,7 +11,7 @@ class ApiNodeService
         $this->apiKey = "reqres-free-v1";
     }
 
-    
+
     private function request(string $endpoint, string $method = 'GET', array $data = []): array
     {
         // Cria a requisição com a URL base da API + o endpoint específico (alunos, eventos, inscricao)
@@ -40,7 +40,7 @@ class ApiNodeService
         $response = curl_exec($ch);
 
         // Armazena o código de status HTTP da resposta (ex: 200, 201, 404) 
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE); 
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         // Fecha a conexão cURL
         curl_close($ch);

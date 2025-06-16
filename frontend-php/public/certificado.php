@@ -1,13 +1,11 @@
 <?php
 
-
 $titulo = $_POST['titulo_evento'];
 $data = $_POST['data_evento'];
 $nome = $_POST['nome_aluno'];
 $nome_palestrante = $_POST['nome_palestrante'];
 
 require '../includes/dompdf/autoload.inc.php';
-
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -17,7 +15,6 @@ require_once '../includes/dompdf/vendor/autoload.php';
 $options = new Options();
 $options->set('isRemoteEnabled', true);
 $dompdf = new Dompdf($options);
-
 
 $html = "
 <!DOCTYPE html>
@@ -56,7 +53,6 @@ $html = "
 </body>
 </html>
 ";
-
 
 $dompdf->loadHtml($html);
 $dompdf->setPaper('A4', 'landscape');

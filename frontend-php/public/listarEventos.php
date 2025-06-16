@@ -43,12 +43,12 @@ $dados = $evento->listarEventos();
             <?php
             $eventosFiltrados = [];
 
+            // filtro por cursos
             if (($dados['code'] === 200) && is_array($dados['body'])) {
-                // Aplica o filtro, se existir
                 $eventosFiltrados = !empty($_GET['curso'])
                     ? array_filter($dados['body'], fn($evento) => $evento['curso'] === $_GET['curso'])
                     : $dados['body'];
-                // Se existir o parâmetro 'curso' na URL, filtra os eventos e mantém só os que têm o campo 'curso' igual ao valor informado
+                // se existir o parâmetro 'curso' na URL, filtra os eventos e mantém só os que têm o campo 'curso' igual ao valor informado
             }
 
             if (!empty($eventosFiltrados)):

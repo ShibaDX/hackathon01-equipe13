@@ -24,9 +24,9 @@ class Alunos
         } else {
             // tenta obter a mensagem de erro
             $mensagem = is_array($resposta['body']) && isset($resposta['body']['message'])
-            ? $resposta['body']['message'] 
-            : 'ERRO desconhecido ao cadastrar aluno.'; // senão, coloca uma mensagem de erro padrão
-            throw new Exception($mensagem);// para debug
+                ? $resposta['body']['message']
+                : 'ERRO desconhecido ao cadastrar aluno.'; // senão, coloca uma mensagem de erro padrão
+            throw new Exception($mensagem); // para debug
         }
     }
 
@@ -57,11 +57,10 @@ class Alunos
             return $resposta;
         } else {
             $mensagem = is_array($resposta['body']) && isset($resposta['body']['message']) // para debug
-            ? $resposta['body']['message']
-            : 'Erro ao fazer login';
+                ? $resposta['body']['message']
+                : 'Erro ao fazer login';
 
             throw new Exception($mensagem);
         }
     }
-
 }

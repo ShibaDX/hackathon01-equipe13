@@ -18,6 +18,7 @@ $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->forma
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    // verifica se o usuário está logado para fazer a inscrição
     if (!isset($_SESSION['aluno_logado']) || !$_SESSION['aluno_logado'] == true) {
         $erro = 'Você precisa entrar em uma conta para se inscrever';
     } else {
