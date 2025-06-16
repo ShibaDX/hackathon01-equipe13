@@ -48,7 +48,12 @@ $dados = $evento->listarEventos();
 
         <div class="container mt-5">
 
+
+    <div class="container mt-5">
+        <h3 class="pb-3">Em Breve</h3>
+
             <h3 class="pb-3">Populares</h3>
+
 
             <div class="eventos-linha">
                 <?php foreach ($eventosFiltrados as $eventoInfo):
