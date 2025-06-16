@@ -4,12 +4,6 @@ require_once 'ApiNodeService.php';
 
 class Alunos
 {
-
-    public function __construct()
-    {
-        //$this->db = (new Database())->connect();
-    }
-
     public function criarAluno($nome, $email, $senha, $telefone, $cpf)
     {
         $api = new ApiNodeService();
@@ -24,31 +18,17 @@ class Alunos
 
         $resposta = $api->cadastrarAluno($aluno);
 
+        // verifica se o cadastro foi bem sucedido
         if ($resposta['code'] === 201) {
             return true;
         } else {
-            $mensagem = is_array($resposta['body']) && isset($resposta['body']['mesage'])
+            // tenta obter a mensagem de erro
+            $mensagem = is_array($resposta['body']) && isset($resposta['body']['message'])
             ? $resposta['body']['message'] 
-            : 'ERRO desconhecido ao cadastrar aluno.';
+            : 'ERRO desconhecido ao cadastrar aluno.'; // senão, coloca uma mensagem de erro padrão
             throw new Exception($mensagem);// para debug
         }
     }
-
-    /*  public function validarLogin($email, $senha)
-    {
-        $sql = "SELECT id, nome, senha from usuarios WHERE email = :email";
-
-        $query = $this->db->prepare($sql);
-        $query->execute(['email' => $email]);
-
-        $usuario = $query->fetch(PDO::FETCH_ASSOC);
-
-        if ($usuario && password_verify($senha, $usuario['senha'])) {
-            return $usuario;
-        }
-
-        return false;
-    } */
 
     public function buscarAluno(int $id)
     {
@@ -84,14 +64,4 @@ class Alunos
         }
     }
 
-    /* public function atualizarUsuario($id, $nome, $email)
-    {
-        $sql = "UPDATE usuarios SET nome = :nome, email = :email WHERE id = :id";
-        $query = $this->db->prepare($sql);
-        $query->execute([
-            'nome' => $nome,
-            'email' => $email,
-            'id' => $id
-        ]);
-    } */
 }

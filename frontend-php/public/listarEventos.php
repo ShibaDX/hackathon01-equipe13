@@ -1,11 +1,6 @@
 <?php
 session_start();
 
-if (isset($_SESSION['aluno_logado']) && $_SESSION['aluno_logado'] === true) {
-    echo "Sessão ativa. ID do aluno: " . $_SESSION['aluno_id'];
-} else {
-    echo "Usuário não está logado.";
-}
 require_once '../classes/Eventos.php';
 require_once '../classes/Palestrantes.php';
 
@@ -33,9 +28,10 @@ $dados = $evento->listarEventos();
         <h1><i class="fa-regular fa-calendar-days"></i> Eventos</h1>
         <h3 class="mt-3">Filtro</h3>
         <form method="GET" id="formFiltro">
-            <select name="curso" id="filtro" class="form-select" style="width: 150px" onchange="document.getElementById('formFiltro').submit()">
+            <select name="curso" id="filtro" class="form-select" style="width: 210px" onchange="document.getElementById('formFiltro').submit()">
                 <option value="">Todos</option>
-                <option value="Sistemas para Internet" <?= ($_GET['curso'] ?? '') === 'Sistemas para Internet' ? 'selected' : '' ?> >Sistemas para Intenet</option>
+                <option value="Geral" <?= ($_GET['curso'] ?? '') === 'Geral' ? 'selected' : '' ?>>Geral</option>
+                <option value="Sistemas para Internet" <?= ($_GET['curso'] ?? '') === 'Sistemas para Internet' ? 'selected' : '' ?>>Sistemas para Internet</option>
                 <option value="Direito" <?= ($_GET['curso'] ?? '') === 'Direito' ? 'selected' : '' ?>>Direito</option>
                 <option value="Pedagogia" <?= ($_GET['curso'] ?? '') === 'Pedagogia' ? 'selected' : '' ?>>Pedagogia</option>
                 <option value="Psicologia" <?= ($_GET['curso'] ?? '') === 'Psicologia' ? 'selected' : '' ?>>Psicologia</option>
@@ -43,7 +39,7 @@ $dados = $evento->listarEventos();
             </select>
         </form>
 
-        <div class="row mt-5">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mt-5">
             <?php
             $eventosFiltrados = [];
 
@@ -52,6 +48,7 @@ $dados = $evento->listarEventos();
                 $eventosFiltrados = !empty($_GET['curso'])
                     ? array_filter($dados['body'], fn($evento) => $evento['curso'] === $_GET['curso'])
                     : $dados['body'];
+                // Se existir o parâmetro 'curso' na URL, filtra os eventos e mantém só os que têm o campo 'curso' igual ao valor informado
             }
 
             if (!empty($eventosFiltrados)):
@@ -59,8 +56,8 @@ $dados = $evento->listarEventos();
                     $dataFormatada = date('d/m/Y', strtotime($eventoInfo['data']));
                     $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
             ?>
-                    <div class="col-lg-3 mb-4">
-                        <div class="card border-primary" style="width: 18rem;">
+                    <div class="col mb-4">
+                        <div class="card h-100 border-primary card-listar" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title"><?= $eventoInfo['titulo'] ?></h5>
                                 <p><?= $eventoInfo['curso'] ?></p>

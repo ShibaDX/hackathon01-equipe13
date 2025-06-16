@@ -1,19 +1,12 @@
 <?php
 session_start();
 
-if (isset($_SESSION['aluno_logado']) && $_SESSION['aluno_logado'] === true) {
-    echo "Sessão ativa. ID do aluno: " . $_SESSION['aluno_id'];
-} else {
-    echo "Usuário não está logado.";
-}
-
 require_once '../classes/Eventos.php';
 require_once '../classes/Palestrantes.php';
 
 $palestrante = new Palestrantes();
 $evento = new Eventos();
 $dados = $evento->listarEventos();
-// RETIRAR A SEÇÃO "POPULARES" SE NÃO DER TEMPO DE FAZER
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -30,7 +23,7 @@ $dados = $evento->listarEventos();
 <body>
     <?php require_once '../includes/header.php' ?>
     <div class="banner">
-        <h1>Bem-vindo a Alfa Eventos</h1>
+        <h1>Bem-vindo à Alfa Eventos</h1>
         <h4 class="pt-5">"Eventos que inspiram, conectam e transformam o ambiente acadêmico em algo ainda maior."</h4>
     </div>
 
@@ -46,13 +39,11 @@ $dados = $evento->listarEventos();
 
     if (!empty($eventosFiltrados)): ?>
 
-        <div class="container mt-5">
+        <div class="text-bg mt-5 mb-3">
+            <h3 class="d-flex">Populares</h3>
+        </div>
 
-
-    <div class="container mt-5">
-        <h3 class="pb-3">Em Breve</h3>
-
-            <h3 class="pb-3">Populares</h3>
+        <div class="container">
 
 
             <div class="eventos-linha">
@@ -61,9 +52,10 @@ $dados = $evento->listarEventos();
                     $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
                 ?>
 
-                    <div class="card d-inline-block border-primary" style="width: 18rem;">
+                    <div class="card border-primary" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title"><?= $eventoInfo['titulo'] ?></h5>
+                            <p><?= $eventoInfo['curso'] ?></p>
                             <p><i class="fa-solid fa-location-dot"></i> <strong><?= $eventoInfo['lugar'] ?></strong></p>
                             <img src="<?= Eventos::IMG_DIR . $eventoInfo['foto']; ?>" class="card-img" alt="Banner do Evento">
                         </div>
@@ -77,7 +69,7 @@ $dados = $evento->listarEventos();
                                     ?>
                                 </p>
                                 <p>Data: <?= $dataFormatada ?> - Hora: <?= $horaFormatada ?> </p>
-                                <button class="btn btn-primary">Saiba mais</button>
+                                <a href="visualizarEvento.php?id=<?= $eventoInfo['id'] ?>"><button class="btn btn-primary">Saiba mais</button></a>
                             </li>
                         </ul>
                     </div>
@@ -88,20 +80,20 @@ $dados = $evento->listarEventos();
 
         </div>
 
-        <div class="container mt-5">
-            <div class="text-bg">
-                <h3 class="pb-3">Em breve</h3>
-            </div>
-
+        <div class="text-bg  mt-5 mb-3">
+            <h3 class="d-flex ">Em breve</h3>
+        </div>
+        <div class="container">
             <div class="eventos-linha">
                 <?php if (($dados['code'] === 200) && (is_array($dados['body'])) && (!is_null($dados['body']))): ?>
                     <?php foreach ($dados['body'] as $eventoInfo):
                         $dataFormatada = date('d/m/Y', strtotime($eventoInfo['data']));
                         $horaFormatada = DateTime::createFromFormat('H:i:s', $eventoInfo['hora'])->format('H\hi');
                     ?>
-                        <div class="card d-inline-block border-primary" style="width: 18rem;">
+                        <div class="card border-primary" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title"><?= $eventoInfo['titulo'] ?></h5>
+                                <p><?= $eventoInfo['curso'] ?></p>
                                 <p><i class="fa-solid fa-location-dot"></i> <strong><?= $eventoInfo['lugar'] ?></strong></p>
                                 <img src="<?= Eventos::IMG_DIR . $eventoInfo['foto']; ?>" class="card-img" alt="Banner do Evento">
                             </div>

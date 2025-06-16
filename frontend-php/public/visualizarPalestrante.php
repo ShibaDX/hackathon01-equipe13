@@ -1,11 +1,6 @@
 <?php
 session_start();
 
-if (isset($_SESSION['aluno_logado']) && $_SESSION['aluno_logado'] === true) {
-    echo "Sessão ativa. ID do aluno: " . $_SESSION['aluno_id'];
-} else {
-    echo "Usuário não está logado.";
-}
 require_once '../classes/Palestrantes.php';
 
 $palestrante = new Palestrantes();
@@ -31,13 +26,23 @@ $palestranteInfo = $dados['body'];
     <main>
         <div class="container-fluid pt-4">
             <div class="row">
-                <div class="col-6">
+
+                <!-- Título -->
+                <div class="col-12 order-1">
                     <h2><?= $palestranteInfo['nome'] ?></h2>
-                    <img class="imgVisualizar" src="<?= Palestrantes::IMG_DIR . $palestranteInfo['foto']; ?>" alt="" style="width: 650px;">
                 </div>
-                <div class="col pt-5">
-                    <p>Especialidade: <?= $palestranteInfo['tema']?></p>
-                    <p>Descrição: <?= $palestranteInfo['descricao'] ?></p>
+
+                <!-- Imagem -->
+                <div class="col-12 col-md-6 order-2 order-md-2">
+                    <div style="width: 100%; height: 400px; display: flex; justify-content: center; align-items: center; overflow: hidden; background-color: #f8f9fa;">
+                        <img class="imgVisualizar img-fluid" src="<?= Palestrantes::IMG_DIR . $palestranteInfo['foto']; ?>" alt="" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
+                </div>
+
+                <!-- Especialidade + Descrição -->
+                <div class="col-12 col-md-6 order-3 order-md-3 pt-4 pt-md-0">
+                    <p><strong>Especialidade:</strong> <?= $palestranteInfo['tema'] ?></p>
+                    <p><strong>Descrição:</strong> <?= $palestranteInfo['descricao'] ?></p>
                 </div>
             </div>
         </div>

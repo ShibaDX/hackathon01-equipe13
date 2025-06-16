@@ -3,6 +3,8 @@ package equipe.hackathon.service;
 import equipe.hackathon.dao.EventoDao;
 import equipe.hackathon.model.Evento;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,5 +46,10 @@ public class EventoService {
         EventoDao dao = new EventoDao();
         List<Object> resultados = dao.select(id);
         return resultados.isEmpty() ? null : (Evento) resultados.get(0);
+    }
+
+    public boolean existeEventoNaMesmaDataHora(LocalDate data, LocalTime hora) {
+        return listarEventos().stream()
+                .anyMatch(e -> e.getData().equals(data) && e.getHora().equals(hora));
     }
 }
