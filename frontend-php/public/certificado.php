@@ -1,6 +1,5 @@
 <?php
 
-
 $titulo = $_POST['titulo_evento'];
 $data = $_POST['data_evento'];
 $nome = $_POST['nome_aluno'];

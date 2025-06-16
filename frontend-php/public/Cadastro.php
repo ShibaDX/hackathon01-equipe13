@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cpf = $_POST['cpf'] ?? '';
 
     try {
-        // Chamada para a API Node.js
+        // chamada para a API Node.js
         $alunoService->criarAluno($nome, $email, $senha, $telefone, $cpf);
         $sucesso = 'Cadastro realizado com sucesso! Faça login para continuar.';
     } catch (Exception $e) {
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            // Validador de CPF
+            // validador de CPF
             function validarCPF(cpf) {
                 cpf = cpf.replace(/[^\d]+/g, '');
 
@@ -143,12 +143,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 mask: '000.000.000-00'
             });
 
-            // Validação no envio do formulário
+            // validação no envio do formulário
             document.getElementById('form_cad').addEventListener('submit', function(e) {
                 const cpfLimpo = cpfMask.unmaskedValue;
 
                 if (!validarCPF(cpfLimpo)) {
-                    e.preventDefault(); // impede envio
+                    e.preventDefault(); // se o cpf for inválido, impede envio
                     alert('CPF inválido. Por favor, verifique e tente novamente.');
                     cpfInput.focus();
                 } else {

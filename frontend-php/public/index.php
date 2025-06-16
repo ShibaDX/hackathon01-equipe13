@@ -39,9 +39,9 @@ $dados = $evento->listarEventos();
 
     if (!empty($eventosFiltrados)): ?>
 
-            <div class="text-bg  mt-4 mb-3">
-                            <h3 class="pb-3">Populares</h3>
-            </div>
+        <div class="text-bg mt-5 mb-3">
+            <h3 class="d-flex">Populares</h3>
+        </div>
 
         <div class="container">
 

@@ -21,7 +21,7 @@ class Inscricao
     public function desinscrever(int $id)
     {
         $api = new ApiNodeService();
-        $inscricao = $api->desinscreverAluno($id);
+        $api->desinscreverAluno($id);
     }
 
     public function listarInscricoesPorAluno(int $alunoId): array

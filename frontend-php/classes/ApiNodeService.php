@@ -11,7 +11,7 @@ class ApiNodeService
         $this->apiKey = "reqres-free-v1";
     }
 
-    // 
+    
     private function request(string $endpoint, string $method = 'GET', array $data = []): array
     {
         // Cria a requisição com a URL base da API + o endpoint específico (alunos, eventos, inscricao)
