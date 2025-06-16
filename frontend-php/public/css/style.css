@@ -5,14 +5,10 @@ body {
 .text-bg {
     color: #FFF;
     width: 100%;
+    height: 50px;
     background-color: #0d6efd;
-    margin: auto 0;
-    border-radius: 10px;
-}
-.text-bg h3{
-    display: flex;
     align-items: center;
-    align-content: center;
+    
 }
 
 .banner {
@@ -53,8 +49,7 @@ body {
 
 .eventos-linha {
     display: inline-flex;
-    text-align: center;
-    white-space: nowrap;
+
 }
 
 .eventos-linha .card {
@@ -73,22 +68,21 @@ body {
 }
 
 .nome-header a {
-    margin: 0;
     text-decoration: none !important;
-    color: #000 !important;
-}
-
-.nome-header a {
-    text-decoration: none !important;
-    /* remove sublinhado */
     color: inherit;
-    /* herda a cor do elemento pai */
 }
 
 .nome-header:hover {
     text-decoration: none;
-    /* evita sublinhado no hover */
     color: inherit;
+}
+
+header {
+    border-bottom: #0d6efd solid 7px;
+}
+
+footer {
+    border-top: #0d6efd solid 5px;
 }
 
 .img-profile {
@@ -96,6 +90,9 @@ body {
     border-radius: 100%;
 }
 
+.img-visualizar{
+    
+}
 
 .perfil-avatar img {
     width: 100px;
@@ -133,4 +130,12 @@ body {
 
 a .nome-header {
     text-decoration: none;
+}
+
+.card-img {
+    height: 170px;
+}
+
+.card-listar {
+    margin: 0 auto;
 }
