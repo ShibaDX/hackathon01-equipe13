@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 public class PalestranteGui extends JFrame {
     private JTextField tfId;
     private JTextField tfNome;
-    private JTextField tfTema;
+    private JComboBox<String> cbTema;
     private JTextField tfFoto;
     private JTextArea taMiniCurriculo;
     private JTable tbPalestrantes;
@@ -39,7 +39,9 @@ public class PalestranteGui extends JFrame {
         tfId = new JTextField(10);
         tfId.setEditable(false);
         tfNome = new JTextField(20);
-        tfTema = new JTextField(20);
+        cbTema = new JComboBox<>(new String[]{
+                "Geral", "Tecnologia" , "Empreendedorismo", "Saúde", "Direito", "Psicologia", "Educação", "Carreira"
+        });
         tfFoto = new JTextField(30);
         taMiniCurriculo = new JTextArea(5, 30);
         JScrollPane scrollCurriculo = new JScrollPane(taMiniCurriculo);
@@ -61,7 +63,7 @@ public class PalestranteGui extends JFrame {
         painelForm.add(tfNome, guiUtils.montarConstraints(1, 1));
 
         painelForm.add(new JLabel("Tema:"), guiUtils.montarConstraints(0, 2));
-        painelForm.add(tfTema, guiUtils.montarConstraints(1, 2));
+        painelForm.add(cbTema, guiUtils.montarConstraints(1, 2));
 
         painelForm.add(new JLabel("Foto:"), guiUtils.montarConstraints(0, 3));
         JPanel painelFoto = new JPanel(new BorderLayout());
@@ -108,6 +110,14 @@ public class PalestranteGui extends JFrame {
         }));
     }
 
+    private Boolean isBlank(JTextField campo, String mensagem) {
+        if (campo.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, mensagem);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
     private void salvarPalestrante(ActionEvent event) {
         try {
             Palestrante palestrante = new Palestrante();
@@ -116,8 +126,11 @@ public class PalestranteGui extends JFrame {
                 palestrante.setId(Integer.parseInt(tfId.getText()));
             }
 
+            if (isBlank(tfNome, "Informe o Nome!")) return;
+            if (isBlank(tfFoto, "Por favor, insira uma foto!")) return;
+
             palestrante.setNome(tfNome.getText());
-            palestrante.setTema(tfTema.getText());
+            palestrante.setTema(cbTema.getSelectedItem().toString());
             palestrante.setFoto(tfFoto.getText());
             palestrante.setDescricao(taMiniCurriculo.getText());
 
@@ -169,7 +182,7 @@ public class PalestranteGui extends JFrame {
     private void limparCampos() {
         tfId.setText("");
         tfNome.setText("");
-        tfTema.setText("");
+        cbTema.setSelectedIndex(0);
         tfFoto.setText("");
         taMiniCurriculo.setText("");
     }
@@ -179,11 +192,32 @@ public class PalestranteGui extends JFrame {
         seletorDeArquivo.setDialogTitle("Selecione uma imagem para o palestrante");
         seletorDeArquivo.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
                 "Arquivos de Imagem", "jpg", "jpeg", "png", "gif"));
-        
+
         int resultado = seletorDeArquivo.showOpenDialog(this);
         if (resultado == JFileChooser.APPROVE_OPTION) {
             java.io.File arquivoSelecionado = seletorDeArquivo.getSelectedFile();
-            tfFoto.setText(arquivoSelecionado.getAbsolutePath());
+            String nomeArquivo = arquivoSelecionado.getName();
+
+            // Caminho relativo até a pasta de destino no frontend-php
+            String caminhoDestino = "../frontend-php/img/uploads/" + nomeArquivo;
+
+            java.nio.file.Path origem = arquivoSelecionado.toPath();
+            java.nio.file.Path destino = java.nio.file.Paths.get(caminhoDestino).normalize();
+
+            try {
+                // Cria a pasta de destino se não existir
+                java.nio.file.Files.createDirectories(destino.getParent());
+
+                // Copia o arquivo (sobrescreve se já existir)
+                java.nio.file.Files.copy(origem, destino, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+                // Salva apenas o nome do arquivo
+                tfFoto.setText(nomeArquivo);
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao copiar a imagem: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
         }
     }
 
@@ -196,7 +230,7 @@ public class PalestranteGui extends JFrame {
                 if (palestrante != null) {
                     tfId.setText(String.valueOf(palestrante.getId()));
                     tfNome.setText(palestrante.getNome());
-                    tfTema.setText(palestrante.getTema());
+                    cbTema.setSelectedItem(palestrante.getTema());
                     tfFoto.setText(palestrante.getFoto());
                     taMiniCurriculo.setText(palestrante.getDescricao());
                 }

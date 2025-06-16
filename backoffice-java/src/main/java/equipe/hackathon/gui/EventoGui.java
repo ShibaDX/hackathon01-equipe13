@@ -21,7 +21,7 @@ public class EventoGui extends JFrame {
     private JTextField tfDescricao;
     private JTextField tfData;
     private JTextField tfHora;
-    private JTextField tfCurso;
+    private JComboBox<String> cbCurso;
     private JTextField tfLugar;
     private JTextField tfFoto;
     private JComboBox<Palestrante> cbPalestrantes;
@@ -56,7 +56,9 @@ public class EventoGui extends JFrame {
         tfDescricao = new JTextField(20);
         tfData = new JTextField(10);
         tfHora = new JTextField(5);
-        tfCurso = new JTextField(15);
+        cbCurso = new JComboBox<>(new String[]{
+                "Geral", "Sistemas para Internet", "Direito", "Psicologia", "Pedagogia", "Administração"
+        });
         tfLugar = new JTextField(20);
         tfFoto = new JTextField(30);
         cbPalestrantes = new JComboBox<>();
@@ -87,7 +89,7 @@ public class EventoGui extends JFrame {
         painelForm.add(tfHora, guiUtils.montarConstraints(1, 4));
 
         painelForm.add(new JLabel("Curso:"), guiUtils.montarConstraints(0, 5));
-        painelForm.add(tfCurso, guiUtils.montarConstraints(1, 5));
+        painelForm.add(cbCurso, guiUtils.montarConstraints(1, 5));
 
         painelForm.add(new JLabel("Lugar:"), guiUtils.montarConstraints(0, 6));
         painelForm.add(tfLugar, guiUtils.montarConstraints(1, 6));
@@ -101,18 +103,18 @@ public class EventoGui extends JFrame {
         painelForm.add(painelFoto, guiUtils.montarConstraints(1, 7));
 
         painelForm.add(new JLabel("Palestrante:"), guiUtils.montarConstraints(0, 8));
-        
+
         // Painel para agrupar o combo de palestrantes e o botão
         JPanel painelPalestrante = new JPanel(new BorderLayout(5, 0));
         painelPalestrante.add(cbPalestrantes, BorderLayout.CENTER);
-        
+
         JButton btnSelecionarPalestrante = new JButton("...");
         btnSelecionarPalestrante.setPreferredSize(new Dimension(30, 20));
         btnSelecionarPalestrante.setMargin(new Insets(0, 5, 0, 0));
-        
+
         JPanel painelBotao = new JPanel(new BorderLayout());
         painelBotao.add(btnSelecionarPalestrante, BorderLayout.EAST);
-        
+
         painelPalestrante.add(painelBotao, BorderLayout.EAST);
         painelForm.add(painelPalestrante, guiUtils.montarConstraints(1, 8));
 
@@ -121,14 +123,14 @@ public class EventoGui extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.EAST;
         gbc.insets = new Insets(5, 5, 5, 5);
-        
+
         gbc.gridx = 0;
         painelBotoes.add(btnSalvar, gbc);
         gbc.gridx++;
         painelBotoes.add(btnLimpar, gbc);
         gbc.gridx++;
         painelBotoes.add(btnExcluir, gbc);
-        
+
         // Adicionando o painel de botões em uma nova linha
         GridBagConstraints gbcBotoes = new GridBagConstraints();
         gbcBotoes.gridx = 0;
@@ -180,6 +182,14 @@ public class EventoGui extends JFrame {
         });
     }
 
+    private Boolean isBlank(JTextField campo, String mensagem) {
+        if (campo.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, mensagem);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
     private void salvarEvento(ActionEvent event) {
         try {
             Evento evento = new Evento();
@@ -188,11 +198,17 @@ public class EventoGui extends JFrame {
                 evento.setId(Long.parseLong(tfId.getText()));
             }
 
+            if (isBlank(tfTitulo, "Informe o Titulo!")) return;
+            if (isBlank(tfLugar, "Informe o Local!")) return;
+            if (isBlank(tfData, "Informe a Data!")) return;
+            if (isBlank(tfHora, "Informe o Horário!")) return;
+            if (isBlank(tfFoto, "Por favor, insira uma foto!")) return;
+
             evento.setTitulo(tfTitulo.getText());
             evento.setDescricao(tfDescricao.getText());
             evento.setData(LocalDate.parse(tfData.getText(), dateFormatter));
             evento.setHora(LocalTime.parse(tfHora.getText(), timeFormatter));
-            evento.setCurso(tfCurso.getText());
+            evento.setCurso(cbCurso.getSelectedItem().toString());
             evento.setLugar(tfLugar.getText());
             evento.setFoto(tfFoto.getText());
 
@@ -265,7 +281,7 @@ public class EventoGui extends JFrame {
         tfDescricao.setText(evento.getDescricao());
         tfData.setText(evento.getData() != null ? dateFormatter.format(evento.getData()) : "");
         tfHora.setText(evento.getHora() != null ? timeFormatter.format(evento.getHora()) : "");
-        tfCurso.setText(evento.getCurso());
+        cbCurso.setSelectedItem(evento.getCurso());
         tfLugar.setText(evento.getLugar());
         tfFoto.setText(evento.getFoto());
 
@@ -278,19 +294,60 @@ public class EventoGui extends JFrame {
         }
     }
 
+    // gerador de nome único para caso haja um arquivo com mesmo nome
+    private String gerarNomeUnico(java.nio.file.Path pastaDestino, String nomeOriginal) {
+        String nome = nomeOriginal;
+        String base = nome;
+        String extensao = "";
+
+        int ponto = nomeOriginal.lastIndexOf(".");
+        if (ponto != -1) {
+            base = nomeOriginal.substring(0, ponto);
+            extensao = nomeOriginal.substring(ponto);
+        }
+
+        int contador = 1;
+        while (java.nio.file.Files.exists(pastaDestino.resolve(nome))) {
+            nome = base + "_" + contador + extensao;
+            contador++;
+        }
+
+        return nome;
+    }
+
     private void selecionarFoto(ActionEvent event) {
         JFileChooser seletorDeArquivo = new JFileChooser();
         seletorDeArquivo.setDialogTitle("Selecione uma imagem para o evento");
         seletorDeArquivo.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
                 "Arquivos de Imagem", "jpg", "jpeg", "png", "gif"));
-        
+
         int resultado = seletorDeArquivo.showOpenDialog(this);
         if (resultado == JFileChooser.APPROVE_OPTION) {
             java.io.File arquivoSelecionado = seletorDeArquivo.getSelectedFile();
-            tfFoto.setText(arquivoSelecionado.getAbsolutePath());
-            // Aqui você pode adicionar a lógica para exibir a prévia da imagem se necessário
+            String nomeOriginal = arquivoSelecionado.getName();
+
+            java.nio.file.Path pastaDestino = java.nio.file.Paths.get("../frontend-php/img/uploads").normalize();
+
+            try {
+                // Cria a pasta se não existir
+                java.nio.file.Files.createDirectories(pastaDestino);
+
+                // Gera nome único
+                String nomeFinal = gerarNomeUnico(pastaDestino, nomeOriginal);
+                java.nio.file.Path destinoFinal = pastaDestino.resolve(nomeFinal);
+
+                // Copia a imagem
+                java.nio.file.Files.copy(arquivoSelecionado.toPath(), destinoFinal);
+
+                tfFoto.setText(nomeFinal); // Salva só o nome do arquivo
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Erro ao copiar a imagem: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
         }
     }
+
 
     private void limparCampos() {
         tfId.setText("");
@@ -298,7 +355,7 @@ public class EventoGui extends JFrame {
         tfDescricao.setText("");
         tfData.setText("");
         tfHora.setText("");
-        tfCurso.setText("");
+        cbCurso.setSelectedIndex(0);
         tfLugar.setText("");
         tfFoto.setText("");
         cbPalestrantes.setSelectedIndex(-1);
