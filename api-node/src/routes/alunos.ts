@@ -41,6 +41,16 @@ alunosRouter.post('/', async (req, res, next) => {
 
         const dados = schema.parse(req.body)
 
+        const cpfExistente = await db('alunos').where({ cpf: dados.cpf}).first()
+        if (cpfExistente) {
+            return res.status(400).json({message: 'CPF já existe'})
+        }
+
+        const emailExistente = await db('alunos').where({ email: dados.email}).first()
+        if (emailExistente) {
+            return res.status(400).json({ message: 'Email já cadastrado' })
+        }
+
         const senhaHash = await hash(dados.senha, 8)
 
         const [id] = await db('alunos').insert({
